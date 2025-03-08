@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peddit Posts</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Hello Peddit</h1>
+    <% posts.forEach(post=> { %>
+        <div class="post">
+            <div class="initial_heading">
+                <h2 class="post_username">@<%= post.username %></h2>
+                <p class="id">#<%= post.id %></p>
+            </div>
+            <h3 class="post_title"><%= post.title %></h3>
+            <p class="post_content"><%= post.content %></p>
+            <button class="post_btn">See post in detail</button>
+        </div>
+        <% }) %>
+</body>
+
+</html>
