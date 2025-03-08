@@ -1,9 +1,14 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
 .post {
     background-color: rgb(132, 198, 255);
     padding: 20px;
     margin: 40px;
     border-radius: 50px;
 }
+
 .id{
     opacity: 0.8;
 }
@@ -35,3 +40,19 @@
 .post_btn:hover{
     border: 5px solid white;
 }
+#logo {
+    width: 200px;
+    margin: 10px;
+    
+}
+.navbar {
+    width: 100%;
+    background-color: rgba(0, 208, 255, 0.432);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+
+}
+
+
+

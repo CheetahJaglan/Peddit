@@ -1,29 +1,28 @@
 {
-    "posts": [
-      {
-        "id": "cbceeefa-4c0f-4758-9654-8efe5e30e503",
-        "username": "cheetah",
-        "title": "I went to Germany",
-        "content": "Und ich lerne deutsch spreche. Es ist sehr einfagh."
-      },
-      {
-        "id": "c0e35c11-cd09-4f6c-a704-7ec7cecc93fc",
-        "username": "jaguar",
-        "title": "My brother went to germany, Now he is only speaking german",
-        "content": "a few days ago, my brother cheetah went to germany. it was his lifelong dream to go there. he went there for a 5 day trip and now he's home. he is only speaking german. seems like he has forgot all the other languages he knew. his ideology is also turning pro - n*zi. please help me."
-      },
-      {
-        "id": "50f27ecd-13c8-4848-b7c2-a5ca545452ea",
-        "username": "lion",
-        "title": "My son is a disappointment",
-        "content": "He supports h*tler. I hate him now."
-      },
-      {
-        "id": "63d1d29a-a1a5-4f6a-b460-e17d1ed38c40",
-        "username": "lioness",
-        "title": "R.I.P Cheetah",
-        "content": "He was assas*nated because of his pro-n*zi ideology. The world seems to a a good place now."
-      }
-    ]
-  }
-  
+  "posts": [
+    {
+      "id": "cbceeefa-4c0f-4758-9654-8efe5e30e503",
+      "username": "cheetah",
+      "title": "I went to Germany",
+      "content": "Und ich lerne deutsch spreche. Es ist sehr einfagh."
+    },
+    {
+      "id": "c0e35c11-cd09-4f6c-a704-7ec7cecc93fc",
+      "username": "jaguar",
+      "title": "My brother went to germany, Now he is only speaking german",
+      "content": "a few days ago, my brother cheetah went to germany. it was his lifelong dream to go there. he went there for a 5 day trip and now he's home. he is only speaking german. seems like he has forgot all the other languages he knew. his ideology is also turning pro - n*zi. please help me."
+    },
+    {
+      "id": "50f27ecd-13c8-4848-b7c2-a5ca545452ea",
+      "username": "lion",
+      "title": "My son is a disappointment",
+      "content": "He supports h*tler. I hate him now."
+    },
+    {
+      "id": "63d1d29a-a1a5-4f6a-b460-e17d1ed38c40",
+      "username": "lioness",
+      "title": "R.I.P Cheetah",
+      "content": "He was assas*nated because of his pro-n*zi ideology. The world seems to a a good place now."
+    }
+  ]
+}
