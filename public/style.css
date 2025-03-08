@@ -1,0 +1,37 @@
+.post {
+    background-color: rgb(132, 198, 255);
+    padding: 20px;
+    margin: 40px;
+    border-radius: 50px;
+}
+.id{
+    opacity: 0.8;
+}
+.initial_heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(131, 236, 255);
+    border-radius: 20px;
+    padding: 10px ;
+}
+
+.post_title {
+    display: inline-block;
+}
+
+.post_username{
+    opacity: 0.8;
+}
+.post_btn{
+    width: 90px;
+    height: 70px;
+    border: none;
+    background-color: rgb(110, 129, 255);
+    border-radius: 20px;
+    color: white;
+    transition-duration: 0.1s;
+}
+.post_btn:hover{
+    border: 5px solid white;
+}
