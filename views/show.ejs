@@ -7,8 +7,7 @@
     <title>
         <%= post.title %> - Peddit
     </title>
-    <link rel="stylesheet" href="/show.css">
-
+    <link rel="stylesheet" href="show.css">
 </head>
 
 <body>
@@ -26,6 +25,15 @@
         </p>
         <p>ID: <%= post.id %>
         </p>
+        <div class="post-actions">
+            <form action="/posts/<%= post.id %>/edit" method="get">
+                <button type="submit" class="edit-btn">Edit</button>
+            </form>
+            <form action="/posts/<%= post.id %>?_method=DELETE" method="post">
+                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+            </form>
+        </div>
+        
     </div>
 </body>
 

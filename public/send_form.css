@@ -1,22 +1,19 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
 }
-
 .navbar {
     background-color: #333;
     color: white;
     padding: 10px;
     text-align: center;
 }
-
 #logo {
     height: 50px;
 }
-
-.post-info {
+.make_a_post {
     background-color: white;
     margin: 20px auto;
     padding: 20px;
@@ -24,29 +21,24 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
-
-.post-info h2 {
+.make_a_post h2 {
     margin-top: 0;
 }
-
-.post-actions {
-    margin-top: 20px;
+.make_a_post input, .make_a_post textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
-
-.edit-btn, .delete-btn {
-    background-color: #007bff;
+.make_a_post button {
+    background-color: #333;
     color: white;
-    border: none;
     padding: 10px 20px;
-    margin-right: 10px;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
 }
-
-.delete-btn {
-    background-color: #dc3545;
-}
-
-.edit-btn:hover, .delete-btn:hover {
-    opacity: 0.8;
+.make_a_post button:hover {
+    background-color: #555;
 }
