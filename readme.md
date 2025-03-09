@@ -9,7 +9,7 @@ Peddit is an open-source Reddit knockoff built using **Node.js** and **Express.j
 - Backend powered by **Express.js**
 - Unique post and user IDs generated using **UUID**
 
-# Tech stack
+## Tech stack
 - Node.js - Backend runtime
 - Express.js - Web framework for Node.js
 - EJS - Templating engine for frontend
@@ -34,4 +34,5 @@ Peddit is an open-source Reddit knockoff built using **Node.js** and **Express.j
 Peddit is open-source, and contributions are welcome! Feel free to fork the repo, create issues, or submit pull requests.
 
 ## Note
-It does not have a server on its own, you have to initialize the server using the given steps. This project is just a dummy of how a mid-range website's web servers look like.
+Peddit is an open-source project for educational and demonstration purposes only. It is not affiliated with or intended to replace Reddit. Users are responsible for how they use this code
+
