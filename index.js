@@ -4,10 +4,10 @@ const port = 3000;
 const path = require('path');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+app.use(express.static(path.join(__dirname, 'public')));
 const posts = JSON.parse(fs.readFileSync(path.join(__dirname, 'data.json'), 'utf8'));
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine','ejs');
 
 app.get('/posts', (req, res) => {
@@ -33,6 +33,11 @@ app.get('/',(req,res) => {
 });
 app.get('/make_a_post',(req,res) => {
     res.render('send_form')
+});
+app.get('/posts/:id', (req, res) => {
+    let {id} = req.params;
+    let post = posts.posts.find((p) => p.id === id);
+    res.render('show', { post });
 });
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

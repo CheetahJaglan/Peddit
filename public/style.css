@@ -42,8 +42,7 @@ html, body {
 }
 #logo {
     width: 200px;
-    margin: 10px;
-    
+    margin: 30px;
 }
 .navbar {
     width: 100%;
@@ -51,8 +50,12 @@ html, body {
     display: flex;
     align-items: center;
     padding: 10px;
+    justify-content: space-between;
+    width: 100vw;
+      
 
 }
-
-
-
+#top_btn{
+    justify-self: flex-end;
+    margin-right: 20px;
+}

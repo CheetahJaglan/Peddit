@@ -10,8 +10,8 @@
 
 <body>
     <div class="navbar">
-        <img src="img/peddit_logo.png" alt="peddit_logo" id="logo">
-        <a href="./make_a_post"><button>Add more post</button></a>
+        <img src="./img/peddit_logo.png" alt="peddit_logo" id="logo">
+        <a href="./make_a_post" id="top_btn"><button class="post_btn" >Add more post</button></a>
     </div>
     <% posts.forEach(post=> { %>
         <div class="post">
@@ -21,7 +21,7 @@
             </div>
             <h3 class="post_title"><%= post.title %></h3>
             <p class="post_content"><%= post.content %></p>
-            <button class="post_btn">See post in detail</button>
+            <a href="./posts/<%= post.id %>"><button class="post_btn">See post in detail</button></a>
         </div>
         <% }) %>
 </body>

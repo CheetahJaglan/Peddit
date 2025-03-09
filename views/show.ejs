@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= post.title %> - Peddit
+    </title>
+    <link rel="stylesheet" href="/show.css">
+
+</head>
+
+<body>
+    <div class="navbar">
+        <img src="/img/peddit_logo.png" alt="peddit_logo" id="logo">
+    </div>
+    <div class="post-info">
+        <h2>
+            <%= post.title %>
+        </h2>
+        <p>
+            <%= post.content %>
+        </p>
+        <p>Post by: <%= post.username %>
+        </p>
+        <p>ID: <%= post.id %>
+        </p>
+    </div>
+</body>
+
+</html>
