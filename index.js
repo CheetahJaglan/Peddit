@@ -41,14 +41,14 @@ app.post('/posts', (req, res) => {
 app.get('/posts/:id', (req, res) => {
     let { id } = req.params;
     let post = posts.posts.find((p) => p.id === id);
-    res.render('show', { post });
+    res.render('show', { post : post });
 });
 
 // Show edit form
 app.get('/posts/:id/edit', (req, res) => {
     let { id } = req.params;
     let post = posts.posts.find((p) => p.id === id);
-    res.render('edit', { post });
+    res.render('edit', { post: post });
 });
 
 // Update a post (PATCH)

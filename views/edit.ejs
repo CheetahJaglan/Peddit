@@ -4,11 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Post</title>
-    <link rel="stylesheet" href="edit.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #logo {
+            height: 50px;
+        }
+
+        .make_a_post {
+            background-color: white;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        .make_a_post h2 {
+            margin-top: 0;
+        }
+
+        .make_a_post input[type="text"],
+        .make_a_post textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .make_a_post button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .make_a_post button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
+        <a href="/">
         <img src="/img/peddit_logo.png" alt="peddit_logo" id="logo">
+        </a>
     </div>
     <div class="make_a_post">
         <h2>Edit Post</h2>
@@ -16,7 +71,7 @@
             <input type="text" name="username" value="<%= post.username %>" required><br>
             <input type="text" name="title" value="<%= post.title %>" required><br>
             <textarea name="content" required><%= post.content %></textarea><br>
-            <button>Update Post</button>    
+            <button>Update Post</button>
         </form>
     </div>
 </body>
