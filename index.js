@@ -29,8 +29,9 @@ app.get('/make_a_post', (req, res) => {
 app.post('/posts', (req, res) => {
     let { username, title, content } = req.body;
     let id = uuidv4();
+    let comments = []
     
-    posts.posts.push({ id, username, title, content });
+    posts.posts.push({ id, username, title, content , comments});
     
     fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
     
@@ -78,6 +79,21 @@ app.delete('/posts/:id', (req, res) => {
 
 app.get('/', (req, res) => {
     res.redirect("/posts");
+});
+
+app.get('/posts/:id/comment', (req, res) => {
+    let { id } = req.params;
+    let post = posts.posts.find((p) => p.id === id);
+    res.render('comment', { post: post });
+});
+
+app.post('/posts/:id/comment',(req,res)=>{
+    let { cUsername, cTitle, cContent } = req.body;
+    let { id } = req.params;
+    let post = posts.posts.find((p) => p.id === id);
+    post.comments.push({cUsername, cTitle, cContent});
+    fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
+    res.redirect(`/posts/${id}`)
 });
 
 app.listen(port, () => {
