@@ -95,7 +95,14 @@ app.post('/posts/:id/comment',(req,res)=>{
     fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
     res.redirect(`/posts/${id}`)
 });
-
+app.delete('/posts/:id/comment/:index', (req, res) => {
+    let { id, index } = req.params;
+    index = parseInt(index, 10); // Convert index to a number
+    let post = posts.posts.find(p => p.id === id);
+    post.comments.splice(index, 1);
+    fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
+    res.redirect(`/posts/${id}`)
+});
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
