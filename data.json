@@ -128,6 +128,24 @@
           "cContent": ""
         }
       ]
+    },
+    {
+      "id": "8945484a-3c14-4008-8b4d-8ee9682fd591",
+      "username": "developer_64",
+      "title": "This is a test post.",
+      "content": "This text is <b>bold </b>and this is <i>italic</i> and this text is <i><b>bold_italic.</b></i>",
+      "comments": [
+        {
+          "cUsername": "dumb",
+          "cTitle": "how do i do it?",
+          "cContent": ""
+        },
+        {
+          "cUsername": "smart",
+          "cTitle": "Problem solved",
+          "cContent": "click on <b>b</b> button for <b>bold </b>and <i>i</i> button for <i>italic.</i>"
+        }
+      ]
     }
   ]
 }

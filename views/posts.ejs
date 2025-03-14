@@ -88,7 +88,7 @@
                 <p class="id">#<%= post.id %></p>
             </div>
             <h3 class="post_title"><%= post.title %></h3>
-            <p class="post_content"><%= post.content %></p>
+            <p class="post_content"><%- post.content %></p>
             <a href="./posts/<%= post.id %>"><button class="post_btn">See post in detail</button></a>
         </div>
         <% }) %>
