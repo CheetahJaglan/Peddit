@@ -146,6 +146,19 @@
           "cContent": "click on <b>b</b> button for <b>bold </b>and <i>i</i> button for <i>italic.</i>"
         }
       ]
+    },
+    {
+      "id": "126d91f3-5535-4ced-a43e-936c459c11f3",
+      "username": "developer_69",
+      "title": "I added the ability to underline",
+      "content": "now u can <u>underline </u>your text",
+      "comments": [
+        {
+          "cUsername": "dumb",
+          "cTitle": "i underlined the whole post",
+          "cContent": "<u>all of it is underlined</u>"
+        }
+      ]
     }
   ]
 }
