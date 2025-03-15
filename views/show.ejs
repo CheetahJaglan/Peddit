@@ -102,7 +102,7 @@
         <a href="/">
             <img src="/img/peddit_logo.png" alt="peddit_logo" id="logo">
         </a>
-        <button class="toggle-btn" onclick="toggleDarkMode()">🌙</button>
+        <button class="toggle-btn" id="toggle"></button>
     </div>
     <div class="post-info">
         <h2><%= post.title %></h2>
@@ -137,5 +137,6 @@
             <% }) %>
         <% } %>
     </div>
+    <script src="/js/darkMode.js"></script>
 </body>
 </html>
