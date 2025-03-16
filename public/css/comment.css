@@ -1,0 +1,162 @@
+        /* Light Mode (Blue-White) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd;
+            color: #0d47a1;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+        }
+
+        #logo {
+            height: 50px;
+        }
+
+        .make_a_comment {
+            background-color: white;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .make_a_comment h2 {
+            margin-top: 0;
+            color: #0d47a1;
+        }
+
+        .make_a_comment input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .make_a_comment button {
+            background-color: #0d47a1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .make_a_comment button:hover {
+            background-color: #1565c0;
+        }
+
+        /* Rich Text Editor */
+        .editor-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .editor {
+            width: 100%;
+            min-height: 150px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: text;
+            outline: none;
+            white-space: pre-wrap;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        .placeholder {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            color: gray;
+            pointer-events: none;
+        }
+
+        .toolbar {
+            margin-bottom: 10px;
+        }
+
+        .toolbar button {
+            background-color: #ddd;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .toolbar button:hover {
+            background-color: #bbb;
+        }
+
+        .hidden-textarea {
+            display: none;
+        }
+
+        /* Dark Mode (Orange-Black) */
+        .dark-mode {
+            background-color: #121212;
+        }
+
+        .dark-mode .navbar {
+            color: #121212;
+        }
+
+        .dark-mode .make_a_comment {
+            background-color: #1e1e1e;
+            box-shadow: 0 0 10px rgba(255, 152, 0, 0.2);
+        }
+
+
+        .dark-mode .make_a_comment input {
+            background-color: #333;
+            color: white;
+        }
+
+        .dark-mode .editor {
+            background-color: #222;
+        }
+
+        .dark-mode .toolbar button {
+            background-color: #444;
+            color: white;
+        }
+
+        .dark-mode .toolbar button:hover {
+            background-color: #666;
+        }
+
+        .dark-mode .make_a_comment button {
+            color: #121212;
+        }
+
+        /* Dark Mode Toggle Button */
+        #toggle {
+            background-color: #1565c0;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            margin-top: 10px;
+            align-self: flex-end;
+        }
+
+        #toggle:hover {
+            background-color: #0d47a1;
+        }
+
+        .dark-mode #toggle {
+            color: #121212;
+        }

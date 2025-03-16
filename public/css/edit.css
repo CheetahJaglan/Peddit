@@ -1,0 +1,105 @@
+        /* Light Mode (Blue-White) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd;
+            color: #0d47a1;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #logo {
+            height: 50px;
+        }
+
+        .make_a_post {
+            background-color: white;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .make_a_post h2 {
+            margin-top: 0;
+            color: #0d47a1;
+        }
+
+        .make_a_post input[type="text"],
+        .make_a_post textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .make_a_post button {
+            background-color: #0d47a1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .make_a_post button:hover {
+            background-color: #1565c0;
+        }
+
+        /* Dark Mode (Orange-Black) */
+        .dark-mode {
+            background-color: #121212;
+        }
+
+        .dark-mode .navbar {
+            color: #121212;
+        }
+
+        .dark-mode .make_a_post {
+            background-color: #1e1e1e;
+            box-shadow: 0 0 10px rgba(255, 152, 0, 0.2);
+        }
+
+
+        .dark-mode .make_a_post input[type="text"],
+        .dark-mode .make_a_post textarea {
+            background-color: #222;
+            color: white;
+        }
+
+        .dark-mode .make_a_post button {
+            color: #121212;
+        }
+
+        /* Dark Mode Toggle Button */
+        #toggle {
+            background-color: #1565c0;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #toggle:hover {
+            background-color: #0d47a1;
+        }
+
+        .dark-mode #toggle {
+            color: #121212;
+        }
