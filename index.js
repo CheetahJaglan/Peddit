@@ -10,6 +10,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+app.use((req, res, next) => {
+    res.locals.draw_header = () => {
+        return '<div class="navbar"><a href="/"><img src="/img/peddit_logo.png" alt="Peddit Logo" id="logo"></a><button id="toggle">Dark Mode</button> </div>'
+    }
+    next();
+});
+
+
 const posts = JSON.parse(fs.readFileSync(path.join(__dirname, 'data.json'), 'utf8'));
 
 app.set('views', path.join(__dirname, 'views'));
@@ -34,7 +42,7 @@ app.post('/posts', (req, res) => {
     posts.posts.push({ id, username, title, content , comments});
     
     fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
-    
+
     res.redirect('/posts');
 });
 

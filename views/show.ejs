@@ -14,12 +14,7 @@
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="/">
-            <img src="/img/peddit_logo.png" alt="peddit_logo" id="logo">
-        </a>
-        <button class="toggle-btn" id="toggle"></button>
-    </div>
+    <%- draw_header() %>
     <div class="post-info">
         <h2><%= post.title %></h2>
         <p><%- post.content %></p>
