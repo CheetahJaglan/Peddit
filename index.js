@@ -29,6 +29,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.get('/posts', (req, res) => {
+    if (req.query.json === 'true') {
+        return res.json(posts.posts);
+    }
     res.render('posts', { posts: posts.posts });
 });
 
@@ -55,6 +58,11 @@ app.get('/posts/:id', (req, res) => {
     let { id } = req.params;
     let post = posts.posts.find(p => p.id === id);
     if (!post) return res.status(404).send("Post not found");
+    
+    if (req.query.json === 'true') {
+        return res.json(post);
+    }
+    
     res.render('show', { post });
 });
 
@@ -98,48 +106,6 @@ app.delete('/posts/:id', (req, res) => {
 
 app.get('/', (req, res) => {
     res.redirect("/posts");
-});
-
-app.get('/posts/:id/comment', (req, res) => {
-    let { id } = req.params;
-    let post = posts.posts.find(p => p.id === id);
-    if (!post) return res.status(404).send("Post not found");
-    res.render('comment', { post });
-});
-
-app.post('/posts/:id/comment', (req, res) => {
-    try {
-        let { cUsername, cTitle, cContent } = req.body;
-        let { id } = req.params;
-        let post = posts.posts.find(p => p.id === id);
-        if (!post) return res.status(404).send("Post not found");
-
-        post.comments.push({ cUsername, cTitle, cContent });
-        fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
-        res.redirect(`/posts/${id}`);
-    } catch (err) {
-        console.error("Error adding comment: ", err);
-        res.status(500).send("Internal Server Error");
-    }
-});
-
-app.delete('/posts/:id/comment/:index', (req, res) => {
-    try {
-        let { id, index } = req.params;
-        index = parseInt(index, 10);
-        let post = posts.posts.find(p => p.id === id);
-        if (!post) return res.status(404).send("Post not found");
-        if (isNaN(index) || index < 0 || index >= post.comments.length) {
-            return res.status(400).send("Invalid comment index");
-        }
-
-        post.comments.splice(index, 1);
-        fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
-        res.redirect(`/posts/${id}`);
-    } catch (err) {
-        console.error("Error deleting comment: ", err);
-        res.status(500).send("Internal Server Error");
-    }
 });
 
 app.use((err, req, res, next) => {
