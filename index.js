@@ -12,77 +12,88 @@ app.use(methodOverride('_method'));
 
 app.use((req, res, next) => {
     res.locals.draw_header = () => {
-        return '<div class="navbar"><a href="/"><img src="/img/peddit_logo.png" alt="Peddit Logo" id="logo"></a><button id="toggle">Dark Mode</button> </div>'
-    }
+        return '<div class="navbar"><a href="/"><img src="/img/peddit_logo.png" alt="Peddit Logo" id="logo"></a><button id="toggle">Dark Mode</button> </div>';
+    };
     next();
 });
 
+let posts = { posts: [] };
 
-const posts = JSON.parse(fs.readFileSync(path.join(__dirname, 'data.json'), 'utf8'));
+try {
+    posts = JSON.parse(fs.readFileSync(path.join(__dirname, 'data.json'), 'utf8'));
+} catch (err) {
+    console.error("Error reading data.json: ", err);
+}
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Show all posts
 app.get('/posts', (req, res) => {
     res.render('posts', { posts: posts.posts });
 });
 
-// Show form to create a new post
 app.get('/make_a_post', (req, res) => {
     res.render('send_form');
 });
 
-// Create a new post
 app.post('/posts', (req, res) => {
-    let { username, title, content } = req.body;
-    let id = uuidv4();
-    let comments = []
-    
-    posts.posts.push({ id, username, title, content , comments});
-    
-    fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
+    try {
+        let { username, title, content } = req.body;
+        let id = uuidv4();
+        let comments = [];
 
-    res.redirect('/posts');
+        posts.posts.push({ id, username, title, content, comments });
+        fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
+        res.redirect('/posts');
+    } catch (err) {
+        console.error("Error creating a post: ", err);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
-// Show a single post
 app.get('/posts/:id', (req, res) => {
     let { id } = req.params;
-    let post = posts.posts.find((p) => p.id === id);
-    res.render('show', { post : post });
+    let post = posts.posts.find(p => p.id === id);
+    if (!post) return res.status(404).send("Post not found");
+    res.render('show', { post });
 });
 
-// Show edit form
 app.get('/posts/:id/edit', (req, res) => {
     let { id } = req.params;
-    let post = posts.posts.find((p) => p.id === id);
-    res.render('edit', { post: post });
+    let post = posts.posts.find(p => p.id === id);
+    if (!post) return res.status(404).send("Post not found");
+    res.render('edit', { post });
 });
 
-// Update a post (PATCH)
 app.patch('/posts/:id', (req, res) => {
-    let { id } = req.params;
-    let { username, title, content } = req.body;
+    try {
+        let { id } = req.params;
+        let { username, title, content } = req.body;
+        let post = posts.posts.find(p => p.id === id);
+        if (!post) return res.status(404).send("Post not found");
 
-    let post = posts.posts.find((p) => p.id === id);
-    if (post) {
         post.username = username;
         post.title = title;
         post.content = content;
-
         fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
+
+        res.redirect(`/posts/${id}`);
+    } catch (err) {
+        console.error("Error updating post: ", err);
+        res.status(500).send("Internal Server Error");
     }
-    res.redirect(`/posts/${id}`);
 });
 
-// Delete a post (DELETE)
 app.delete('/posts/:id', (req, res) => {
-    let { id } = req.params;
-    posts.posts = posts.posts.filter((p) => p.id !== id);
-
-    fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
-    res.redirect('/posts');
+    try {
+        let { id } = req.params;
+        posts.posts = posts.posts.filter(p => p.id !== id);
+        fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
+        res.redirect('/posts');
+    } catch (err) {
+        console.error("Error deleting post: ", err);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 app.get('/', (req, res) => {
@@ -91,26 +102,51 @@ app.get('/', (req, res) => {
 
 app.get('/posts/:id/comment', (req, res) => {
     let { id } = req.params;
-    let post = posts.posts.find((p) => p.id === id);
-    res.render('comment', { post: post });
+    let post = posts.posts.find(p => p.id === id);
+    if (!post) return res.status(404).send("Post not found");
+    res.render('comment', { post });
 });
 
-app.post('/posts/:id/comment',(req,res)=>{
-    let { cUsername, cTitle, cContent } = req.body;
-    let { id } = req.params;
-    let post = posts.posts.find((p) => p.id === id);
-    post.comments.push({cUsername, cTitle, cContent});
-    fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
-    res.redirect(`/posts/${id}`)
+app.post('/posts/:id/comment', (req, res) => {
+    try {
+        let { cUsername, cTitle, cContent } = req.body;
+        let { id } = req.params;
+        let post = posts.posts.find(p => p.id === id);
+        if (!post) return res.status(404).send("Post not found");
+
+        post.comments.push({ cUsername, cTitle, cContent });
+        fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
+        res.redirect(`/posts/${id}`);
+    } catch (err) {
+        console.error("Error adding comment: ", err);
+        res.status(500).send("Internal Server Error");
+    }
 });
+
 app.delete('/posts/:id/comment/:index', (req, res) => {
-    let { id, index } = req.params;
-    index = parseInt(index, 10); // Convert index to a number
-    let post = posts.posts.find(p => p.id === id);
-    post.comments.splice(index, 1);
-    fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
-    res.redirect(`/posts/${id}`)
+    try {
+        let { id, index } = req.params;
+        index = parseInt(index, 10);
+        let post = posts.posts.find(p => p.id === id);
+        if (!post) return res.status(404).send("Post not found");
+        if (isNaN(index) || index < 0 || index >= post.comments.length) {
+            return res.status(400).send("Invalid comment index");
+        }
+
+        post.comments.splice(index, 1);
+        fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(posts, null, 2));
+        res.redirect(`/posts/${id}`);
+    } catch (err) {
+        console.error("Error deleting comment: ", err);
+        res.status(500).send("Internal Server Error");
+    }
 });
+
+app.use((err, req, res, next) => {
+    console.error("Unexpected error: ", err);
+    res.status(500).send("Something went wrong!");
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
