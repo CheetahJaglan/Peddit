@@ -35,6 +35,10 @@ app.get("/posts", async (req, res) => {
 app.get("/make_a_post", (req, res) => {
   res.render("send_form");
 });
+app.get('/posts/:id/comment',(req,res) => {
+  let {id} = req.params;
+  res.render('comment',{id})
+})
 
 app.post("/posts", async (req, res) => {
   let comments = [];
@@ -42,6 +46,16 @@ app.post("/posts", async (req, res) => {
   await newPost.save()
   res.redirect("/posts");
 });
+app.post('/posts/:id/comment',async (req,res) => {
+  let {id} = req.params;
+  let target_post = await Post.findById(id);
+  target_post.comments.push(req.body);
+
+  await target_post.save();
+  console.log("Comment added successfully!");
+  
+  res.redirect(`/posts/${id}`)
+})
 
 app.get("/posts/:id", async (req, res) => {
   let { id } = req.params;
@@ -67,6 +81,20 @@ app.delete("/posts/:id", async (req, res) => {
   await Post.findByIdAndDelete(id)
   res.redirect("/posts");
 });
+
+app.delete('/posts/:id/comment/:index', async (req, res) => {
+  let { id, index } = req.params;
+  index = parseInt(index, 10); // Convert index from string to number
+    let post = await Post.findById(id);
+    if (index < 0 || index >= post.comments.length) {
+      return res.status(400).send("Invalid comment index");
+    }
+    post.comments.splice(index, 1); // Remove the comment by index
+    await post.save(); // Save changes to MongoDB
+    res.redirect(`/posts/${id}`);
+
+});
+
 
 app.get("/", (req, res) => {
   res.redirect("/posts");
