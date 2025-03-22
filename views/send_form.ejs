@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,58 +11,58 @@
 <body>
     <%- draw_header() %>
 
-    <div class="make_a_post">
-        <h2>Post</h2>
-        <form action="./posts" method="post">
-            <input type="text" name="username" placeholder="Please enter your username"><br>
-            <input type="text" name="title" placeholder="Please enter the title of your post"><br>
+        <div class="make_a_post">
+            <h2>Post</h2>
+            <form action="./posts" method="post">
+                <input type="text" name="Post[username]" placeholder="Please enter your username"><br>
+                <input type="text" name="Post[title]" placeholder="Please enter the title of your post"><br>
 
-            <div class="toolbar">
-                <button type="button" onclick="formatText('bold')"><b>B</b></button>
-                <button type="button" onclick="formatText('italic')"><i>I</i></button>
-                <button type="button" onclick="formatText('underline')"><u>U</u></button>
-            </div>
+                <div class="toolbar">
+                    <button type="button" onclick="formatText('bold')"><b>B</b></button>
+                    <button type="button" onclick="formatText('italic')"><i>I</i></button>
+                    <button type="button" onclick="formatText('underline')"><u>U</u></button>
+                </div>
 
-            <div class="editor-container">
-                <div id="placeholder" class="placeholder">Write your post...</div>
-                <div id="editor" class="editor" contenteditable="true"></div>
-            </div>
+                <div class="editor-container">
+                    <div id="placeholder" class="placeholder">Write your post...</div>
+                    <div id="editor" class="editor" contenteditable="true"></div>
+                </div>
 
-            <!-- Hidden textarea to store formatted content -->
-            <textarea id="hidden-textarea" name="content" class="hidden-textarea"></textarea>
+                <!-- Hidden textarea to store formatted content -->
+                <textarea id="hidden-textarea" name="Post[content]" class="hidden-textarea"></textarea>
 
-            <button type="submit">Post Now!</button>
-        </form>
-    </div>
-    <script src="/js/darkMode.js"></script>
+                <button type="submit">Post Now!</button>
+            </form>
+        </div>
+        <script src="/js/darkMode.js"></script>
 
-    <script>
-        const editor = document.getElementById("editor");
-        const placeholder = document.getElementById("placeholder");
-        const hiddenTextarea = document.getElementById("hidden-textarea");
-        const toggleButton = document.getElementById("toggle");
+        <script>
+            const editor = document.getElementById("editor");
+            const placeholder = document.getElementById("placeholder");
+            const hiddenTextarea = document.getElementById("hidden-textarea");
+            const toggleButton = document.getElementById("toggle");
 
-        // Show/Hide placeholder when typing
-        editor.addEventListener("input", () => {
-            placeholder.style.display = editor.innerText.trim() ? "none" : "block";
-            syncTextarea();
-        });
+            // Show/Hide placeholder when typing
+            editor.addEventListener("input", () => {
+                placeholder.style.display = editor.innerText.trim() ? "none" : "block";
+                syncTextarea();
+            });
 
-        function formatText(command) {
-            document.execCommand(command, false, null);
-            syncTextarea();
-        }
+            function formatText(command) {
+                document.execCommand(command, false, null);
+                syncTextarea();
+            }
 
-        function syncTextarea() {
-            hiddenTextarea.value = editor.innerHTML; // Store formatted HTML in hidden textarea
-        }
+            function syncTextarea() {
+                hiddenTextarea.value = editor.innerHTML; // Store formatted HTML in hidden textarea
+            }
 
-        document.querySelector("form").addEventListener("submit", () => {
-            syncTextarea(); // Ensure latest content is saved
-        });
+            document.querySelector("form").addEventListener("submit", () => {
+                syncTextarea(); // Ensure latest content is saved
+            });
 
 
-    </script>
+        </script>
 
 </body>
 

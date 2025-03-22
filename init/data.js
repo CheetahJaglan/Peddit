@@ -1,6 +1,5 @@
 const samplePosts = [
   {
-    id: "cbceeefa-4c0f-4758-9654-8efe5e30e503",
     username: "cheetah",
     title: "I went to Italy",
     content: "And now I only speak Italian. Mamma mia, this is amazing!",
@@ -19,7 +18,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "c0e35c11-cd09-4f6c-a704-7ec7cecc93fc",
     username: "jaguar",
     title: "My brother went to Italy, now he refuses to eat anything but pizza",
     content:
@@ -34,7 +32,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "50f27ecd-13c8-4848-b7c2-a5ca545452ea",
     username: "lion",
     title: "My son is a pizza addict",
     content:
@@ -42,7 +39,6 @@ const samplePosts = [
     comments: [],
   },
   {
-    id: "f23b4d57-9078-4b6f-900a-5c8d3bafd1f2",
     username: "cheetah",
     title: "I have been resurrected!",
     content:
@@ -56,7 +52,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "a1b2c3d4-e5f6-7890-1234-56789abcdef0",
     username: "jaguar",
     title: "Cheetah opened a pizza shop in our garage",
     content:
@@ -71,7 +66,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "b2c3d4e5-f678-9012-3456-789abcdef012",
     username: "lioness",
     title: "Cheetah has become a local legend",
     content:
@@ -85,7 +79,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "c3d4e5f6-7890-1234-5678-9abcdef01234",
     username: "cheetah",
     title: "Now I am on a mission!",
     content:
@@ -100,7 +93,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "d4e5f6g7-8901-2345-6789-abcdef012345",
     username: "jaguar",
     title: "He left for New York... with a suitcase full of flour",
     content:
@@ -115,7 +107,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "e5f6g7h8-9012-3456-789a-bcdef0123456",
     username: "lion",
     title: "Cheetah is now famous... and banned from 3 pizza chains",
     content:
@@ -130,7 +121,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "1dc0e211-69b6-4cf6-8d1c-bba55d322c6d",
     username: "pizza_hater_5469",
     title: "I ate a delicious pizza",
     content:
@@ -144,7 +134,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "8945484a-3c14-4008-8b4d-8ee9682fd591",
     username: "developer_64",
     title: "This is a test post.",
     content:
@@ -164,7 +153,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "126d91f3-5535-4ced-a43e-936c459c11f3",
     username: "developer_69",
     title: "I added the ability to underline",
     content: "now u can <u>underline </u>your text",
@@ -177,7 +165,6 @@ const samplePosts = [
     ],
   },
   {
-    id: "aabf7968-263b-452c-af4e-d1dcdbc195b9",
     username: "developer_109",
     title: "Now, there is dark mode",
     content: "<i>Guyyss</i>! Now you have <b><u>dark mode</u></b>.",

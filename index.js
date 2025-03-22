@@ -28,48 +28,38 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.get("/posts", async (req, res) => {
-    const posts = await Post.find({})
-    res.render("posts", {posts});
+  const posts = await Post.find({});
+  res.render("posts", { posts });
 });
 
 app.get("/make_a_post", (req, res) => {
   res.render("send_form");
 });
 
-app.post("/posts", (req, res) => {
-  let { username, title, content } = req.body;
-  let id = uuidv4();
+app.post("/posts", async (req, res) => {
   let comments = [];
-
+  const newPost = new Post(req.body.Post)
+  await newPost.save()
   res.redirect("/posts");
 });
 
 app.get("/posts/:id", async (req, res) => {
   let { id } = req.params;
-  let post = await Post.findById(id)
+  let post = await Post.findById(id);
 
   res.render("show", { post });
 });
 
-app.get("/posts/:id/edit", (req, res) => {
+app.get("/posts/:id/edit", async (req, res) => {
   let { id } = req.params;
-  let post = posts.posts.find((p) => p.id === id);
+  let post = await Post.findById(id);
   res.render("edit", { post });
 });
 
-app.patch("/posts/:id", (req, res) => {
+app.patch("/posts/:id", async (req, res) => {
   let { id } = req.params;
-  let { username, title, content } = req.body;
-  let post = posts.posts.find((p) => p.id === id);
-  post.username = username;
-  post.title = title;
-  post.content = content;
-  fs.writeFileSync(
-    path.join(__dirname, "data.json"),
-    JSON.stringify(posts, null, 2)
-  );
-
-  res.redirect(`/posts/${id}`);
+  await Post.findByIdAndUpdate(id,{...req.body.Post})
+  res.redirect(`./posts/${id}`);
 });
 
 app.delete("/posts/:id", (req, res) => {

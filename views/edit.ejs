@@ -12,9 +12,9 @@
     <div class="make_a_post">
         <h2>Edit Post</h2>
         <form action="/posts/<%= post.id %>?_method=PATCH" method="post">
-            <input type="text" name="username" value="<%= post.username %>" required><br>
-            <input type="text" name="title" value="<%= post.title %>" required><br>
-            <textarea name="content" required><%= post.content %></textarea><br>
+            <input type="text" name="Post[username]" value="<%= post.username %>" required><br>
+            <input type="text" name="Post[title]" value="<%= post.title %>" required><br>
+            <textarea name="Post[content]" ><%= post.content %></textarea><br>
             <button>Update Post</button>
         </form>
     </div>
