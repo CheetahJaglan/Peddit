@@ -59,16 +59,12 @@ app.get("/posts/:id/edit", async (req, res) => {
 app.patch("/posts/:id", async (req, res) => {
   let { id } = req.params;
   await Post.findByIdAndUpdate(id,{...req.body.Post})
-  res.redirect(`./posts/${id}`);
+  res.redirect(`/posts/${id}`);
 });
 
-app.delete("/posts/:id", (req, res) => {
+app.delete("/posts/:id", async (req, res) => {
   let { id } = req.params;
-  posts.posts = posts.posts.filter((p) => p.id !== id);
-  fs.writeFileSync(
-    path.join(__dirname, "data.json"),
-    JSON.stringify(posts, null, 2)
-  );
+  await Post.findByIdAndDelete(id)
   res.redirect("/posts");
 });
 
