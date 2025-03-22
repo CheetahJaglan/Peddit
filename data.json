@@ -170,9 +170,15 @@
     {
       "id": "6be74035-13a1-405b-9cf1-7ffff3944572",
       "username": "dev_",
-      "title": "New Update1",
-      "content": "&lt;div style=\"background-color : red \"&gt;It is to be informed that there will be a new update to the app and we would be using mongodb in that new update&lt;/div&gt;",
-      "comments": []
+      "title": "New Update",
+      "content": "It is to be informed that there will be a new update to the app and we would be using mongodb in that new update",
+      "comments": [
+        {
+          "cUsername": "random_commentoer",
+          "cTitle": "oooo, cool",
+          "cContent": ""
+        }
+      ]
     }
   ]
 }
