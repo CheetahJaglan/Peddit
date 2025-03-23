@@ -15,7 +15,7 @@ Peddit is an open-source Reddit knockoff built using **Node.js** and **Express.j
 - Node.js - Backend runtime
 - Express.js - Web framework for Node.js
 - EJS - Templating engine for frontend
-- UUID - Unique ID generation
+- MongoDB - A database to store.
 
 ## Installation
 
