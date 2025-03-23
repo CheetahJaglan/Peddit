@@ -6,6 +6,7 @@ const Post = require("./models/post.js");
 const { v4: uuidv4 } = require("uuid");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
+const rateLimit = require("express-rate-limit");
 const MONGO_URL = "mongodb://127.0.0.1:27017/Peddit";
 
 mongoose
@@ -15,8 +16,20 @@ mongoose
     console.log("Database connection error:", err);
   });
 
+
+// Rate limiter to prevent DDoS attacks
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
+  message: "Too many requests, please try again later."
+});
+app.use(limiter);
+
+// Limit payload size to prevent abuse
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.use((req, res, next) => {
@@ -158,6 +171,7 @@ app.get("/", (req, res) => {
 app.use((req, res) => {
   res.render('error_404', {err_msg : `The page you are looking for doesn't exist`});
 });
+
 // Global Error Handler
 app.use((err, req, res, next) => {
   console.log("Unexpected error:", err);
