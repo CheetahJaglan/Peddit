@@ -32,6 +32,9 @@ app.set("view engine", "ejs");
 app.get("/posts", async (req, res, next) => {
   try {
     const posts = await Post.find({});
+    if (req.query.json === "true") {
+      return res.json({ posts });
+    }
     res.render("posts", { posts });
   } catch (err) {
     console.log("Error fetching posts:", err);
@@ -52,24 +55,13 @@ app.post("/posts", async (req, res, next) => {
   try {
     const newPost = new Post(req.body.Post);
     await newPost.save();
+    if (req.query.json === "true") {
+      return res.json({ success: true, post: newPost });
+    }
     res.redirect("/posts");
   } catch (err) {
     console.log("Error creating post:", err);
-    res.render('error_500', {err_msg : `Error creating post`})
-  }
-});
-
-app.post("/posts/:id/comment", async (req, res, next) => {
-  try {
-    let { id } = req.params;
-    let target_post = await Post.findById(id);
-    if (!target_post) return res.send("Post not found");
-    target_post.comments.push(req.body);
-    await target_post.save();
-    res.redirect(`/posts/${id}`);
-  } catch (err) {
-    console.log("Error adding comment:", err);
-    res.render('error_404', {err_msg : `The post you want to comment on doesn't exist`});
+    res.render('error_500', {err_msg : `Error creating post`});
   }
 });
 
@@ -78,22 +70,13 @@ app.get("/posts/:id", async (req, res, next) => {
     let { id } = req.params;
     let post = await Post.findById(id);
     if (!post) return res.send("Post not found");
+    if (req.query.json === "true") {
+      return res.json({ post });
+    }
     res.render("show", { post });
   } catch (err) {
     console.log("Error fetching post:", err);
-    res.render('error_404', {err_msg : `The post you want to view doesn't exist`})
-  }
-});
-
-app.get("/posts/:id/edit", async (req, res, next) => {
-  try {
-    let { id } = req.params;
-    let post = await Post.findById(id);
-    if (!post) return res.send("Post not found");
-    res.render("edit", { post });
-  } catch (err) {
-    console.log("Error fetching post for edit:", err);
-    res.render('error_404', {err_msg : `The post you want to edit doesn't exist`});
+    res.render('error_404', {err_msg : `The post you want to view doesn't exist`});
   }
 });
 
@@ -102,11 +85,20 @@ app.patch("/posts/:id", async (req, res, next) => {
     let { id } = req.params;
     let updatedPost = await Post.findByIdAndUpdate(id, { ...req.body.Post }, { new: true });
     if (!updatedPost) return res.send("Post not found");
+    if (req.query.json === "true") {
+      return res.json({ success: true, post: updatedPost });
+    }
     res.redirect(`/posts/${id}`);
   } catch (err) {
     console.log("Error updating post:", err);
-    res.render('error_500', {err_msg : `Internal server error`})
+    res.render('error_500', {err_msg : `Internal server error`});
   }
+});
+
+app.get("/posts/:id/edit", async (req, res) => {
+  let { id } = req.params;
+  let post = await Post.findById(id);
+  res.render("edit", { post });
 });
 
 app.delete("/posts/:id", async (req, res, next) => {
@@ -114,11 +106,20 @@ app.delete("/posts/:id", async (req, res, next) => {
     let { id } = req.params;
     let deletedPost = await Post.findByIdAndDelete(id);
     if (!deletedPost) return res.send("Post not found");
+    if (req.query.json === "true") {
+      return res.json({ success: true, deletedPost });
+    }
     res.redirect("/posts");
   } catch (err) {
     console.log("Error deleting post:", err);
     res.render('error_500', {err_msg : `Error deleting post`});
   }
+});
+
+app.patch("/posts/:id", async (req, res) => {
+  let {id} = req.params;
+  await Post.findByIdAndUpdate(id ,{...req.body.Post})
+  res.redirect(`./posts/${id}`);
 });
 
 app.delete("/posts/:id/comment/:index", async (req, res, next) => {
@@ -139,17 +140,28 @@ app.delete("/posts/:id/comment/:index", async (req, res, next) => {
   }
 });
 
+app.post('/posts/:id/comment',async (req,res) => {
+  let {id} = req.params;
+  let target_post = await Post.findById(id);
+  target_post.comments.push(req.body);
+
+  await target_post.save();
+  console.log("Comment added successfully!");
+  
+  res.redirect(`/posts/${id}`)
+})
+
 app.get("/", (req, res) => {
   res.redirect("/posts");
 });
 
 app.use((req, res) => {
-  res.render('error_404', {err_msg : `The page you are looking for doesn't exist`})
+  res.render('error_404', {err_msg : `The page you are looking for doesn't exist`});
 });
 // Global Error Handler
 app.use((err, req, res, next) => {
   console.log("Unexpected error:", err);
-  res.render('error_500', {err_msg : `Something went wrong`})
+  res.render('error_500', {err_msg : `Something went wrong`});
 });
 
 app.listen(port, () => {
