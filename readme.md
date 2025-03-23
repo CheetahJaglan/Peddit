@@ -7,7 +7,7 @@ Peddit is an open-source Reddit knockoff built using **Node.js** and **Express.j
 - Create, read, update, and delete posts
 - Basic frontend built with **EJS**
 - Backend powered by **Express.js**
-- Unique post and user IDs generated using **UUID**
+- Database powered to **MongoDB**
 - Comment on Posts
 - Rich text formatting (Bold, Italic and Underline)
 

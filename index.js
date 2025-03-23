@@ -35,7 +35,7 @@ app.get("/posts", async (req, res, next) => {
     res.render("posts", { posts });
   } catch (err) {
     console.log("Error fetching posts:", err);
-    res.render('error_500', {err_msg : `Error fetching posts : ${err} `})
+    res.render('error_500', {err_msg : `Error fetching posts : ${err} `});
   }
 });
 
@@ -69,7 +69,7 @@ app.post("/posts/:id/comment", async (req, res, next) => {
     res.redirect(`/posts/${id}`);
   } catch (err) {
     console.log("Error adding comment:", err);
-    res.render('error_404', {err_msg : `The post you want to comment on doesn't exist`})
+    res.render('error_404', {err_msg : `The post you want to comment on doesn't exist`});
   }
 });
 
@@ -93,7 +93,7 @@ app.get("/posts/:id/edit", async (req, res, next) => {
     res.render("edit", { post });
   } catch (err) {
     console.log("Error fetching post for edit:", err);
-    res.render('error_404', {err_msg : `The post you want to edit doesn't exist`})
+    res.render('error_404', {err_msg : `The post you want to edit doesn't exist`});
   }
 });
 
@@ -117,7 +117,7 @@ app.delete("/posts/:id", async (req, res, next) => {
     res.redirect("/posts");
   } catch (err) {
     console.log("Error deleting post:", err);
-    res.render('error_500', {err_msg : `Error deleting post`})
+    res.render('error_500', {err_msg : `Error deleting post`});
   }
 });
 
