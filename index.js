@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const path = require('path');
 const fs = require('fs');
+const rateLimit = require("express-rate-limit");
 const { v4: uuidv4 } = require('uuid');
 const methodOverride = require('method-override');
 
@@ -10,6 +11,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per window
+    message: "Too many requests, please try again later."
+  });
+  app.use(limiter);
+  
+  // Limit payload size to prevent abuse
+  app.use(express.json({ limit: "10kb" }));
+  app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+  
 app.use((req, res, next) => {
     res.locals.draw_header = () => {
         return '<div class="navbar"><a href="/"><img src="/img/peddit_logo.png" alt="Peddit Logo" id="logo"></a><button id="toggle">Dark Mode</button> </div>';
