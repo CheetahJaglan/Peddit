@@ -160,6 +160,11 @@ app.get('/', (req, res) => {
     res.redirect("/posts");
 });
 
+app.get('/random', (req, res) => {
+    let post = posts.posts[Math.floor(Math.random() * posts.posts.length)];
+    res.redirect(`/posts/${post.id}`);
+});
+
 app.use((err, req, res, next) => {
     console.error("Unexpected error: ", err);
     res.status(500).send("Something went wrong!");
