@@ -40,6 +40,8 @@ body {
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 800px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .dark-mode .post-info {
