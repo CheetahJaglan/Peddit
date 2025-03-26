@@ -168,6 +168,25 @@ app.get("/", (req, res) => {
   res.redirect("/posts");
 });
 
+app.get("/random", async (req, res) => {
+  try {
+    const count = await Post.countDocuments();
+    if (count === 0) {
+      return res.render("error_404", { err_msg: "No posts available" });
+    }
+    const randomIndex = Math.floor(Math.random() * count);
+    const randomPost = await Post.findOne().skip(randomIndex);
+    
+    if (req.query.json === "true") {
+      return res.json({ post: randomPost });
+    }
+    res.redirect(`/posts/${randomPost._id}`);
+  } catch (err) {
+    console.log("Error fetching random post:", err);
+    res.render("error_500", { err_msg: "Error fetching random post" });
+  }
+});
+
 app.use((req, res) => {
   res.render('error_404', {err_msg : `The page you are looking for doesn't exist`});
 });
