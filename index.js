@@ -20,7 +20,7 @@ mongoose
 // Rate limiter to prevent DDoS attacks
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per window
+  max: 200, // Limit each IP to 100 requests per window
   message: "Too many requests, please try again later."
 });
 app.use(limiter);
@@ -59,10 +59,6 @@ app.get("/make_a_post", (req, res) => {
   res.render("send_form");
 });
 
-app.get("/posts/:id/comment", (req, res) => {
-  let { id } = req.params;
-  res.render("comment", { id });
-});
 
 app.post("/posts", async (req, res, next) => {
   try {

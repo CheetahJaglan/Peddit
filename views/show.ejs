@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= post.title %> - Peddit</title>
+    <title>
+        <%= post.title %> - Peddit
+    </title>
     <link rel="stylesheet" href="/css/show.css">
+    <link rel="stylesheet" href="/css/comment.css">
     <script>
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
@@ -15,39 +18,60 @@
 
 <body>
     <%- draw_header() %>
-    <div class="post-info">
-        <h2><%= post.title %></h2>
-        <p><%- post.content %></p>
-        <p>Post by: <%= post.username %></p>
-        <div class="post-actions">
-            <form action="/posts/<%= post.id %>/edit" method="get">
-                <button type="submit" class="btn btn-edit">Edit</button>
-            </form>
-            <form action="/posts/<%= post.id %>?_method=DELETE" method="post">
-                <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
-            </form>
-            <form action="/posts/<%= post.id %>/comment" method="get">
-                <button type="submit" class="btn btn-comment">Comment</button>
-            </form>
+        <div class="post-info">
+            <h2>
+                <%= post.title %>
+            </h2>
+            <p><%- post.content %></p>
+            <p>Post by: <%= post.username %>
+            </p>
+            <div class="post-actions">
+                <form action="/posts/<%= post.id %>/edit" method="get">
+                    <button type="submit" class="btn btn-edit">Edit</button>
+                </form>
+                <form action="/posts/<%= post.id %>?_method=DELETE" method="post">
+                    <button type="submit" class="btn btn-delete"
+                        onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+
+            </div>
         </div>
-    </div>
-    <div class="post-info comment-section">
-        <h3>Comments</h3>
-        <% if (post.comments.length == 0){ %>
-            <p>No Comments Currently</p>
-        <% } else { %>
-            <% post.comments.forEach((comment, index) => { %>
-                <div class="comment-card">
-                    <p><strong><%= comment.cUsername %></strong></p>
-                    <h4><%= comment.cTitle %></h4>
-                    <p><%- comment.cContent %></p>
-                    <form action="/posts/<%= post.id %>/comment/<%= index %>?_method=DELETE" method="post">
-                        <button class="btn btn-delete" onclick="return confirm('Delete this comment?')">Delete</button>
-                    </form>
+        <div class="post-info comment-section">
+            <h3>Comments</h3>
+
+            <form action="/posts/<%= post.id %>/comment" method="post" class="comment-card" id="comment-form">
+                <input type="text" required name="cUsername" placeholder="Username"><br>
+                <input type="text" required name="cTitle" placeholder="Title"><br>
+                <div class="editor-container">
+                    <div id="cPlaceholder" class="placeholder">Write your comment...</div>
+                    <div id="cEditor" class="editor" contenteditable="true"></div>
                 </div>
-            <% }) %>
-        <% } %>
-    </div>
-    <script src="/js/darkMode.js"></script>
+
+                <!-- Hidden textarea to store formatted content -->
+                <textarea id="hidden-cTextarea" name="cContent" class="hidden-textarea"></textarea>
+                <button class="btn btn-delete">Post Now</button>
+            </form>
+            <% if (post.comments.length==0){ %>
+                <p>No Comments Currently</p>
+                <% } else { %>
+                    <% post.comments.forEach((comment, index)=> { %>
+                        <div class="comment-card">
+                            <p><strong>
+                                    <%= comment.cUsername %>
+                                </strong></p>
+                            <h4>
+                                <%= comment.cTitle %>
+                            </h4>
+                            <p><%- comment.cContent %></p>
+                            <form action="/posts/<%= post.id %>/comment/<%= index %>?_method=DELETE" method="post">
+                                <button class="btn btn-delete"
+                                    onclick="return confirm('Delete this comment?')">Delete</button>
+                            </form>
+                        </div>
+                        <% }) %>
+                            <% } %>
+        </div>
+        <script src="/js/darkMode.js"></script>
 </body>
+
 </html>
