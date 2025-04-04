@@ -5,7 +5,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const rateLimit = require("express-rate-limit");
-
+const cookieParser = require("cookie-parser");
 const postRoutes = require("./routes/posts.js"); // 🌟 pulled out routes
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/Peddit";
@@ -29,7 +29,7 @@ app.use(limiter);
 // Payload size limits
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
-
+app.use(cookieParser());
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
