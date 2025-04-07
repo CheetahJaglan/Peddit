@@ -7,7 +7,7 @@ const methodOverride = require("method-override");
 const rateLimit = require("express-rate-limit");
 const cookieParser = require("cookie-parser");
 const postRoutes = require("./routes/posts.js"); // 🌟 pulled out routes
-
+const session = require('express-session')
 const MONGO_URL = "mongodb://127.0.0.1:27017/Peddit";
 
 // DB Connection
@@ -29,7 +29,13 @@ app.use(limiter);
 // Payload size limits
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
+// Cookie parser middleware
 app.use(cookieParser());
+
+// Session middleware
+app.use(session({secret : "80p_peddit",resave : false,saveUninitialized : true}))
+
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
