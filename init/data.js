@@ -127,3 +127,17 @@ const samplePosts = [
 ];
 
 module.exports = samplePosts;
+
+/*
+const users = [
+  "astroNate",
+  "quantumJess",
+  "pixelPete",
+  "byteQueen",
+  "cyberDrip",
+  "scriptGoblin",
+  "debugDylan",
+  "error404Eli",
+  "codeBandit"
+];
+*/
