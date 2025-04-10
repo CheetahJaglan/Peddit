@@ -1,126 +1,129 @@
 const samplePosts = [
   {
-    username: "dev_24",
-    title: "Post creation now works (probably)",
-    content: "You can now create posts. If it breaks, you didn’t see this post.",
+    username: "astroNate",
+    title: "The moon is definitely fake",
+    content: "I zoomed in with my phone and saw pixels. NASA’s been lying to us. Wake up, sheeple.",
     comments: [
       {
-        cUsername: "dev_16",
-        cTitle: "It *definitely* broke",
-        cContent: "I made a post and it disappeared into the void.",
+        cUsername: "quantumJess",
+        cTitle: "Seek help",
+        cContent: "Have you considered touching grass today?",
+      },
+      {
+        cUsername: "codeBandit",
+        cTitle: "hot take",
+        cContent: "Finally, someone brave enough to speak nonsense.",
       },
     ],
   },
   {
-    username: "nora99",
-    title: "I wrote an emotional post and it got deleted",
-    content: "Turns out the delete button *really* works. I clicked it by accident and now my feelings are gone.",
+    username: "quantumJess",
+    title: "My cat is now lead dev",
+    content: "She sat on my keyboard, wrote 17 lines of code, and somehow fixed a bug I couldn’t find for a week.",
     comments: [
       {
-        cUsername: "dev_18",
-        cTitle: "feature not bug",
-        cContent: "Deleting posts is therapeutic. You’re welcome.",
+        cUsername: "astroNate",
+        cTitle: "Hire her",
+        cContent: "Put her on payroll. She’s clearly more qualified.",
       },
     ],
   },
   {
-    username: "ev_18",
-    title: "Rich Text Formatting is here 🎉",
-    content: "You can now use <b>bold</b>, <i>italic</i>, and <u>underline</u> in posts and comments.",
+    username: "pixelPete",
+    title: "Shaded for 3 hours, forgot to save",
+    content: "Yup. Closed the file. Didn’t save. I’m just staring at the void now.",
     comments: [
       {
-        cUsername: "nora99",
-        cTitle: "<u>This is my whole personality now</u>",
-        cContent: "<b><i>I will only speak in styles from now on.</i></b>",
+        cUsername: "byteQueen",
+        cTitle: "pain",
+        cContent: "Ctrl+S is free. Learn from our mistakes.",
       },
     ],
   },
   {
-    username: "jamie_writer",
-    title: "My post got eaten by MongoDB",
-    content: "I saved it, came back, and it’s gone. I think Mongo is hungry.",
+    username: "byteQueen",
+    title: "I drink coffee like it’s a patch update",
+    content: "v3.4.2 – minor bug fixes and increased sarcasm per sip",
     comments: [
       {
-        cUsername: "dev_24",
-        cTitle: "MongoDB is innocent",
-        cContent: "Probably a bug in the save handler. Or the ghost of my last draft.",
+        cUsername: "quantumJess",
+        cTitle: "relatable af",
+        cContent: "My blood type is espresso at this point.",
       },
     ],
   },
   {
-    username: "dev_16",
-    title: "Commenting now works!",
-    content: "You can now comment on any post. Be civil. Or don’t. I’m not your mod.",
+    username: "cyberDrip",
+    title: "Styled my terminal to look like a rave",
+    content: "It’s neon pink on jet black. I now fear no bug. Only migraines.",
     comments: [
       {
-        cUsername: "jamie_writer",
-        cTitle: "First!",
-        cContent: "Just testing. Please ignore me.",
+        cUsername: "scriptGoblin",
+        cTitle: "visual chaos",
+        cContent: "Your terminal is a disco ball and I respect that.",
       },
     ],
   },
   {
-    username: "nora99",
-    title: "Is this EJS magic or a fever dream?",
-    content: "I changed one tag and the entire layout exploded. I fear the templating gods.",
+    username: "scriptGoblin",
+    title: "I use Notepad++ and I’m not sorry",
+    content: "You Vim vs Emacs people can fight in the trenches. I’ll be here, winning in simplicity.",
     comments: [
       {
-        cUsername: "dev_18",
-        cTitle: "sacrifice more divs",
-        cContent: "EJS demands tribute.",
+        cUsername: "cyberDrip",
+        cTitle: "respect++",
+        cContent: "You’re the real minimalist MVP.",
       },
     ],
   },
   {
-    username: "dev_84",
-    title: "Posts can now be updated",
-    content: "Edit your post if you made a typo. Or if your entire personality changed in 5 minutes.",
+    username: "debugDylan",
+    title: "Three hours of debugging for one semicolon",
+    content: "I aged five years today. The semicolon was *right there*.",
     comments: [
       {
-        cUsername: "jamie_writer",
-        cTitle: "I regret everything",
-        cContent: "Editing is a blessing and a curse. Mostly a curse.",
+        cUsername: "byteQueen",
+        cTitle: "classic JS moment",
+        cContent: "JavaScript: where one semicolon decides your fate.",
       },
     ],
   },
   {
-    username: "dev_84",
-    title: "Basic frontend is live",
-    content: "It’s functional. Not cute, but functional. If you want pretty, go outside.",
-    comments: [],
-  },
-  {
-    username: "dev_18",
-    title: "We’re live on MongoDB now",
-    content: "Your posts are stored. Forever. Even the cringe ones.",
+    username: "error404Eli",
+    title: "Production is down and so am I",
+    content: "Trying not to cry while pretending to 'investigate'. Currently Googling 'how to disappear'.",
     comments: [
       {
-        cUsername: "nora99",
-        cTitle: "Nooo",
-        cContent: "There’s stuff in there I want buried.",
+        cUsername: "debugDylan",
+        cTitle: "mood",
+        cContent: "You ever cry in SSH? Same.",
       },
     ],
   },
   {
-    username: "dev_24",
-    title: "Backend stable-ish",
-    content: "Express is behaving... for now. Don’t push it.",
+    username: "pixelPete",
+    title: "Made pixel art of my sadness",
+    content: "It's just a single black square. It’s modern, it’s honest, it’s pain.",
     comments: [
       {
-        cUsername: "maria_dev",
-        cTitle: "Famous last words",
-        cContent: "You just jinxed the backend. Prepare for war.",
+        cUsername: "astroNate",
+        cTitle: "masterpiece",
+        cContent: "Exhibited this in the MoMA of despair.",
       },
     ],
   },
   {
-    "username": "dev_24",
-    "title": "Dark mode Functionality",
-    "content": "Hey There ! Now you have <u>dark mode</u>. It is pretty, isn't it",
-    "comments": []
-  }
-
+    username: "codeBandit",
+    title: "‘Borrowed’ some code",
+    content: "I copied it from Stack Overflow, sprinkled in a few comments, and boom — originality.",
+    comments: [
+      {
+        cUsername: "error404Eli",
+        cTitle: "certified dev moment",
+        cContent: "If it works, it’s yours. That’s the law.",
+      },
+    ],
+  },
 ];
 
-
-module.exports = { data: samplePosts };
+module.exports = samplePosts;
