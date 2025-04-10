@@ -1,10 +1,8 @@
-// routes/posts.js
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/post.js");
 
-// All post-related routes go here
-
+// Get all posts
 router.get("/", async (req, res) => {
   try {
     const posts = await Post.find({});
@@ -16,26 +14,34 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Show create form
 router.get("/make_a_post", (req, res) => {
   res.render("send_form");
 });
 
+// Create new post
 router.post("/", async (req, res) => {
   try {
     const newPost = new Post(req.body.Post);
     await newPost.save();
+    req.flash("success", "Post created successfully!");
     if (req.query.json === "true") return res.json({ success: true, post: newPost });
     res.redirect("/posts");
   } catch (err) {
     console.log("Error creating post:", err);
-    res.render("error_500", { err_msg: "Error creating post" });
+    req.flash("error", "Failed to create post.");
+    res.redirect("/posts");
   }
 });
 
+// Show single post
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (!post) return res.send("Post not found");
+    if (!post) {
+      req.flash("error", "Post not found.");
+      return res.redirect("/posts");
+    }
     if (req.query.json === "true") return res.json({ post });
     res.render("show", { post });
   } catch (err) {
@@ -44,41 +50,59 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Edit post form
 router.get("/:id/edit", async (req, res) => {
   const post = await Post.findById(req.params.id);
   res.render("edit", { post });
 });
 
+// Update post
 router.patch("/:id", async (req, res) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(req.params.id, { ...req.body.Post }, { new: true });
-    if (!updatedPost) return res.send("Post not found");
-    if (req.query.json === "true") return res.json({ success: true, post: updatedPost });
+    if (!updatedPost) {
+      req.flash("error", "Post not found.");
+      return res.redirect("/posts");
+    }
+    req.flash("success", "Post updated!");
     res.redirect(`/posts/${req.params.id}`);
   } catch (err) {
     console.log("Error updating post:", err);
-    res.render("error_500", { err_msg: "Internal server error" });
+    req.flash("error", "Failed to update post.");
+    res.redirect("/posts");
   }
 });
 
+// Delete post
 router.delete("/:id", async (req, res) => {
   try {
     const deletedPost = await Post.findByIdAndDelete(req.params.id);
-    if (!deletedPost) return res.send("Post not found");
-    if (req.query.json === "true") return res.json({ success: true, deletedPost });
+    if (!deletedPost) {
+      req.flash("error", "Post not found.");
+      return res.redirect("/posts");
+    }
+    req.flash("success", "Post deleted successfully!");
     res.redirect("/posts");
   } catch (err) {
     console.log("Error deleting post:", err);
-    res.render("error_500", { err_msg: "Error deleting post" });
+    req.flash("error", "Error deleting post.");
+    res.redirect("/posts");
   }
 });
 
 // Add comment
 router.post("/:id/comment", async (req, res) => {
-  const post = await Post.findById(req.params.id);
-  post.comments.push(req.body);
-  await post.save();
-  res.redirect(`/posts/${req.params.id}`);
+  try {
+    const post = await Post.findById(req.params.id);
+    post.comments.push(req.body);
+    await post.save();
+    req.flash("success", "Comment added!");
+    res.redirect(`/posts/${req.params.id}`);
+  } catch (err) {
+    console.log("Error adding comment:", err);
+    req.flash("error", "Failed to add comment.");
+    res.redirect(`/posts/${req.params.id}`);
+  }
 });
 
 // Delete comment
@@ -86,17 +110,25 @@ router.delete("/:id/comment/:index", async (req, res) => {
   try {
     const { id, index } = req.params;
     const post = await Post.findById(id);
-    if (!post) return res.send("Post not found");
+    if (!post) {
+      req.flash("error", "Post not found.");
+      return res.redirect("/posts");
+    }
 
     const idx = parseInt(index, 10);
-    if (idx < 0 || idx >= post.comments.length) return res.send("Invalid comment index");
+    if (idx < 0 || idx >= post.comments.length) {
+      req.flash("error", "Invalid comment index.");
+      return res.redirect(`/posts/${id}`);
+    }
 
     post.comments.splice(idx, 1);
     await post.save();
+    req.flash("success", "Comment deleted!");
     res.redirect(`/posts/${id}`);
   } catch (err) {
     console.log("Error deleting comment:", err);
-    res.render("error_500", { err_msg: "Error, sorry, there is an error on our side" });
+    req.flash("error", "Error deleting comment.");
+    res.redirect(`/posts/${req.params.id}`);
   }
 });
 

@@ -6,8 +6,10 @@ const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const rateLimit = require("express-rate-limit");
 const cookieParser = require("cookie-parser");
-const postRoutes = require("./routes/posts.js"); // 🌟 pulled out routes
-const session = require('express-session')
+const postRoutes = require("./routes/posts.js");
+const session = require("express-session");
+const flash = require("connect-flash");
+
 const MONGO_URL = "mongodb://127.0.0.1:27017/Peddit";
 
 // DB Connection
@@ -22,7 +24,7 @@ mongoose
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 200,
-  message: "Too many requests, please try again later."
+  message: "Too many requests, please try again later.",
 });
 app.use(limiter);
 
@@ -34,7 +36,10 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(cookieParser());
 
 // Session middleware
-app.use(session({secret : "80p_peddit",resave : false,saveUninitialized : true}))
+app.use(session({ secret: "80p_peddit", resave: false, saveUninitialized: true }));
+
+// Flash middleware
+app.use(flash());
 
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
@@ -44,23 +49,25 @@ app.use(methodOverride("_method"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-// Navbar helper
+// Navbar + flash helper
 app.use((req, res, next) => {
   res.locals.draw_header = () => {
     return '<div class="navbar"><a href="/"><img src="/img/peddit_logo.png" alt="Peddit Logo" id="logo"></a><button id="toggle">Dark Mode</button></div>';
   };
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
   next();
 });
 
-// 🌐 Main Routes
+// Main Routes
 app.use("/posts", postRoutes);
 
-// 🔁 Redirect root to /posts
+// Redirect root to /posts
 app.get("/", (req, res) => {
   res.redirect("/posts");
 });
 
-// 🎲 Random Post
+// Random Post
 const Post = require("./models/post.js");
 app.get("/random", async (req, res) => {
   try {
@@ -81,18 +88,18 @@ app.get("/random", async (req, res) => {
   }
 });
 
-// ❌ 404 Handler
+// 404 Handler
 app.use((req, res) => {
   res.render("error_404", { err_msg: `The page you are looking for doesn't exist` });
 });
 
-// 🧯 Global Error Handler
+// Global Error Handler
 app.use((err, req, res, next) => {
   console.log("Unexpected error:", err);
   res.render("error_500", { err_msg: `Something went wrong` });
 });
 
-// 🔊 Server Listen
+// Server Listen
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
