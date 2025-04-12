@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Peddit</title>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+    <link rel="stylesheet" href="/css/flash.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode {
+            background-color: #1e1e1e;
+            color: #eee;
+        }
+
+        .navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .dark-mode .navbar {
+            background-color: #0a2a5e;
+        }
+
+        main {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode main {
+            background-color: #2c2c2c;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .signup-form label {
+            margin-top: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .signup-form input,
+        .signup-form textarea {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #000;
+        }
+
+        .dark-mode .signup-form input,
+        .dark-mode .signup-form textarea {
+            background-color: #3a3a3a;
+            color: #eee;
+            border: 1px solid #666;
+        }
+
+        .signup-form button {
+            margin-top: 1.5rem;
+            padding: 0.7rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .signup-form button:hover {
+            background-color: #0056b3;
+        }
+
+        #logo {
+            height: 50px;
+        }
+
+        .typewriter-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh;
+        }
+
+        #typewriter {
+            font-family: monospace;
+            font-size: 1.5rem;
+            white-space: nowrap;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #cursor {
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- draw_header() %>
+
+    <% if (success && success.length > 0) { %>
+        <div class="flash success fade-in">
+            <span class="close-btn" onclick="this.parentElement.classList.add('fade-out'); setTimeout(() => this.parentElement.remove(), 500);">×</span>
+            <%= success %>
+        </div>
+    <% } %>
+
+    <% if (error && error.length > 0) { %>
+        <div class="flash error fade-in">
+            <span class="close-btn" onclick="this.parentElement.classList.add('fade-out'); setTimeout(() => this.parentElement.remove(), 500);">×</span>
+            <%= error %>
+        </div>
+    <% } %>
+
+    <h2>Sign up to Peddit</h2>
+
+    <div class="typewriter-container">
+        <div id="typewriter">
+            <span id="static">The Perfect Place for&nbsp;</span><span id="dynamic"></span><span id="cursor">|</span>
+        </div>
+    </div>
+
+    <main>
+        <h2>Sign Up</h2>
+        <form action="/signup" method="POST" class="signup-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="bio">Bio (optional):</label>
+            <textarea id="bio" name="bio" rows="4"></textarea>
+
+            <button type="submit">Create Account</button>
+        </form>
+    </main>
+
+    <script src="/js/darkMode.js"></script>
+    <script src="/js/flashUpdate.js"></script>
+    <script>
+        const phrases = [
+            "Chatting",
+            "Posting",
+            "Messaging",
+            "Meeting",
+            "Connecting",
+            "Sharing"
+        ];
+
+        const dynamicEl = document.getElementById("dynamic");
+        let phraseIndex = 0;
+        let letterIndex = 0;
+        let isDeleting = false;
+        let delay = 100;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+
+            if (isDeleting) {
+                letterIndex--;
+                delay = 50;
+            } else {
+                letterIndex++;
+                delay = 100;
+            }
+
+            dynamicEl.textContent = currentPhrase.substring(0, letterIndex);
+
+            if (!isDeleting && letterIndex === currentPhrase.length) {
+                delay = 1000;
+                isDeleting = true;
+            } else if (isDeleting && letterIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                delay = 300;
+            }
+
+            setTimeout(type, delay);
+        }
+
+        type();
+    </script>
+
+</body>
+</html>
