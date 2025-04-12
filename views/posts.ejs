@@ -18,6 +18,11 @@
         </a>
         <button id="toggle" class="post-btn">Dark Mode</button>
         <a href="./posts/make_a_post"><button class="post-btn">Add Post</button></a>
+        <% if (!user) { %>
+        <a href="./users/login"><button class="post-btn">Login</button></a>
+        <% } else { %>
+          <p>Signed in as <%= user.username %></p>
+        <% } %>
     </div>
     <% if (success && success.length > 0) { %>
         <div class="flash success fade-in">
