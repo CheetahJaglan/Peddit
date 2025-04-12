@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Peddit</title>
+    <title>Log In - Peddit</title>
 
     <script>
         function toggleDarkMode() {
@@ -165,18 +165,16 @@
     </div>
 
     <main>
-        <h2>Sign Up</h2>
-        <form action="/users/signup" method="POST" class="signup-form">
+        <h2>Log In</h2>
+        <form action="/users/login" method="POST" class="signup-form">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 
-            <label for="bio">Bio (optional):</label>
-            <textarea id="bio" name="bio" rows="4"></textarea>
 
-            <button type="submit">Create Account</button>
+            <button type="submit">Log In </button>
         </form>
     </main>
 
