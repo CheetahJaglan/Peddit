@@ -3,6 +3,7 @@ const router = express.Router();
 const Post = require("../models/post.js");
 const User = require('../models/user');
 const passport = require('passport');
+const cookieParser = require('cookie-parser');
 
 
 // Get all posts
@@ -69,6 +70,10 @@ router.get("/:id/edit", async (req, res) => {
     return res.redirect(`/posts/${req.params.id}`);
   }
   const post = await Post.findById(req.params.id);
+  if(!(req.user.username==post.username)){
+    req.flash("error", "You cannot edit this post");
+    return res.redirect(`/posts/${req.params.id}`);
+  }
   res.render("edit", { post });
 });
 
@@ -104,6 +109,10 @@ router.delete("/:id", async (req, res) => {
     if (!deletedPost) {
       req.flash("error", "Post not found.");
       return res.redirect("/posts");
+    }
+    if(!(req.user==post.username)){
+      req.flash("error", "You cannot delete this post");
+      return res.redirect(`/posts/${req.params.id}`);
     }
     req.flash("success", "Post deleted successfully!");
     res.redirect("/posts");

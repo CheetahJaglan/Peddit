@@ -69,6 +69,18 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.cookie("username", req.user.username, { maxAge: 900000, httpOnly: true });
+    next();
+  }
+  else {
+    res.clearCookie("username");
+    next();
+  }
+}
+);
+
 // Main Routes
 app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
