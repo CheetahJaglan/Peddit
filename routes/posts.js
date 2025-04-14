@@ -1,22 +1,36 @@
+if(process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/post.js");
 const User = require('../models/user');
-const passport = require('passport');
-const cookieParser = require('cookie-parser');
-
+const multer = require('multer');
+const { storage } = require('../cloudConfig.js');
+const upload = multer({ storage });
 
 // Get all posts
 router.get("/", async (req, res) => {
   try {
     const posts = await Post.find({});
-    if (req.query.json === "true") return res.json({ posts });
-    res.render("posts", { posts , user : req.user});
+
+    // Check if the user is logged in and fetch their profile
+    const user = req.user ? await User.findById(req.user._id) : null;
+
+    if (req.query.json === "true") {
+      return res.json({ posts, user });
+    }
+    console.log(user)
+    // Just pass the user directly to the view. No messing with the image URL.
+    res.render("posts", { posts, user });
+
   } catch (err) {
     console.log("Error fetching posts:", err);
     res.render("error_500", { err_msg: `Error fetching posts : ${err}` });
   }
 });
+
+
 
 // Show create form
 router.get("/make_a_post", (req, res) => {

@@ -7,7 +7,7 @@ const UserSchema = new Schema({
         type: String,
         required: false,
     },
-    profilePic: {
+    ProfilePic: {
         type: String,
         required: false,
     }

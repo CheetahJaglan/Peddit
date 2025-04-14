@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Post = require("../models/post.js");
+const User = require("../models/user.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/Peddit";
 
@@ -8,10 +9,17 @@ mongoose
   .then(() => console.log(`connect to db, url is ${MONGO_URL}`))
   .catch(console.log);
 
-const initDB = async () => {
+const clearPosts = async () => {
   await Post.deleteMany({});
   await Post.insertMany([]);
   console.log("data was rewritten");
 };
 
-initDB();
+clearPosts();
+
+const clearUsers = async () => {
+  await User.deleteMany({});
+  await User.insertMany([]);
+  console.log("data was rewritten");
+};
+clearUsers();

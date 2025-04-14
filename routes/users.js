@@ -16,19 +16,36 @@ router.get('/signup', (req, res) => {
 });
 
 // Example route: POST /users
-router.post('/signup', upload.single('ProfilePic') , async (req, res) => {
-    try{
-        let {username, password, bio} = req.body;
-        const profilePicPath = req.file ? `/uploads/${req.file.filename}` : null;
-        const newUser = new User({username, password, bio, profilePic: profilePicPath});
+router.post('/signup', upload.single('ProfilePic'), async (req, res) => {
+    try {
+        let { username, password, bio } = req.body;
+
+        let cloudinaryUrl = null;
+        if (req.file && req.file.path) {
+            // req.file.path is the temp path on your server
+            // but req.file.filename isn't the final Cloudinary name
+
+            // ✅ Here's the important bit:
+            cloudinaryUrl = req.file.path; // multer-storage-cloudinary injects secure_url here
+        }
+
+        const newUser = new User({ 
+            username, 
+            password, 
+            bio, 
+            ProfilePic: cloudinaryUrl 
+        });
+
         await User.register(newUser, password);
         req.flash("success", "User Registered");
         res.redirect("/posts");
-    } catch(e){
+
+    } catch (e) {
         req.flash("error", e.message);
         res.redirect("/users/signup");
     }
-})
+});
+
 
 
 router.get("/login", (req, res) => {

@@ -58,6 +58,7 @@
         .dropdown-menu a:hover {
             background-color: #f0f0f0;
         }
+
         .dropdown-menu p {
             padding: 10px 16px;
             text-decoration: none;
@@ -79,49 +80,60 @@
         </a>
         <button id="toggle" class="post-btn">Dark Mode</button>
         <% if (user){ %>
-        <a href="./posts/make_a_post"><button class="post-btn">Add Post</button></a>
-        <div class="account-container">
-            <button id="accountBtn" class="account-button">
-                <img src="https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg" alt="User" class="avatar" />
-                <span class="arrow">&#9662;</span>
-            </button>
-            <div id="dropdownMenu" class="dropdown-menu hidden">
-                <p>@<%= user.username %></p>
-                <a href="#">Profile</a>
-                <a href="#">Settings</a>
-                <a href="/users/logout">Logout</a>
+            <a href="./posts/make_a_post"><button class="post-btn">Add Post</button></a>
+            <div class="account-container">
+                <button id="accountBtn" class="account-button">
+                    
+                    <% if (user.ProfilePic) { %>
+                        <img src="<%= user.ProfilePic %>" alt="<%= user.username %>" class="avatar" />
+                      <% } else { %>
+                        <img src="https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg" alt="User" class="avatar" />
+                      <% } %>
+                      
+                    <span class="arrow">&#9662;</span>
+                </button>
+                <div id="dropdownMenu" class="dropdown-menu hidden">
+                    <p>@<%= user.username %></p>
+                    <a href="#">Profile</a>
+                    <a href="#">Settings</a>
+                    <a href="/users/logout">Logout</a>
+                </div>
             </div>
-        </div>
         <% } %>
+
         <% if (!user) { %>
-        <a href="./users/login"><button class="post-btn">Login</button></a>
+            <a href="./users/login"><button class="post-btn">Login</button></a>
         <% } %>
     </div>
 
     <% if (success && success.length > 0) { %>
         <div class="flash success fade-in">
-          <span class="close-btn" onclick="this.parentElement.classList.add('fade-out'); setTimeout(() => this.parentElement.remove(), 500);">&times;</span>
-          <%= success %>
+            <span class="close-btn"
+                onclick="this.parentElement.classList.add('fade-out'); setTimeout(() => this.parentElement.remove(), 500);">&times;</span>
+            <%= success %>
         </div>
     <% } %>
 
     <% if (error && error.length > 0) { %>
         <div class="flash error fade-in">
-          <span class="close-btn" onclick="this.parentElement.classList.add('fade-out'); setTimeout(() => this.parentElement.remove(), 500);">&times;</span>
-          <%= error %>
+            <span class="close-btn"
+                onclick="this.parentElement.classList.add('fade-out'); setTimeout(() => this.parentElement.remove(), 500);">&times;</span>
+            <%= error %>
         </div>
     <% } %>
 
     <% posts.forEach(post => { %>
-    <div class="post">
-        <div class="initial-heading">
-            <h2 class="post-username">@<%= post.username %></h2>
-            <p class="id">#<%= post.id %></p>
+        <div class="post">
+            <div class="initial-heading">
+                <h2 class="post-username">@<%= post.username %></h2>
+                <p class="id">#<%= post.id %></p>
+            </div>
+            <h3 class="post-title">
+                <%= post.title %>
+            </h3>
+            <p class="post-content"><%- post.content %></p>
+            <a href="./posts/<%= post.id %>"><button class="post-btn">See Details</button></a>
         </div>
-        <h3 class="post-title"><%= post.title %></h3>
-        <p class="post-content"><%- post.content %></p>
-        <a href="./posts/<%= post.id %>"><button class="post-btn">See Details</button></a>
-    </div>
     <% }) %>
 
     <script src="/js/darkMode.js"></script>
