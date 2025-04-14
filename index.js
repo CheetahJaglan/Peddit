@@ -7,9 +7,13 @@ const methodOverride = require("method-override");
 const rateLimit = require("express-rate-limit");
 const cookieParser = require("cookie-parser");
 const postRoutes = require("./routes/posts.js");
+const userRoutes = require("./routes/users.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 const MONGO_URL = "mongodb://127.0.0.1:27017/Peddit";
+const passport = require("passport");
+const User = require("./models/user.js");
+const LocalStrategy = require("passport-local");
 // DB Connection
 mongoose
   .connect(MONGO_URL)
@@ -39,6 +43,13 @@ app.use(session({ secret: "80p_peddit", resave: false, saveUninitialized: true }
 // Flash middleware
 app.use(flash());
 
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
@@ -58,8 +69,21 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.cookie("username", req.user.username, { maxAge: 900000, httpOnly: true });
+    next();
+  }
+  else {
+    res.clearCookie("username");
+    next();
+  }
+}
+);
+
 // Main Routes
 app.use("/posts", postRoutes);
+app.use("/users", userRoutes);
 
 // Redirect root to /posts
 app.get("/", (req, res) => {
