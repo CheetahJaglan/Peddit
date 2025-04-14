@@ -7,11 +7,9 @@ const UserSchema = new Schema({
         type: String,
         required: false,
     },
-    age: {
-        type: Number,
-        required: false,
-        min: 0,
-        max: 100
+    profilePic: {
+        type: String,
+        default: 'www.profilepic.com/default.png'
     }
 });
 

@@ -1,9 +1,11 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const checkbox = document.getElementById('show-passwords');
+    const passwordField = document.getElementById('password');
+    const confirmPasswordField = document.getElementById('confirm-password');
 
-function togglePasswordVisibility() {
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirm-password');
-    const showPasswords = document.getElementById('show-passwords').checked;
-    const type = showPasswords ? 'text' : 'password';
-    password.type = type;
-    confirmPassword.type = type;
-}
+    checkbox.addEventListener('change', () => {
+        const type = checkbox.checked ? 'text' : 'password';
+        passwordField.type = type;
+        confirmPasswordField.type = type;
+    });
+});
