@@ -105,14 +105,15 @@ router.delete("/:id", async (req, res) => {
       req.flash("error", "You cannot delete this post");
       return res.redirect(`/posts/${req.params.id}`);
     }
+    const post = await Post.findById(req.params.id);
+    if(!(req.user.username==post.username)){
+      req.flash("error", "You cannot delete this post");
+      return res.redirect(`/posts/${req.params.id}`);
+    }
     const deletedPost = await Post.findByIdAndDelete(req.params.id);
     if (!deletedPost) {
       req.flash("error", "Post not found.");
       return res.redirect("/posts");
-    }
-    if(!(req.user==post.username)){
-      req.flash("error", "You cannot delete this post");
-      return res.redirect(`/posts/${req.params.id}`);
     }
     req.flash("success", "Post deleted successfully!");
     res.redirect("/posts");

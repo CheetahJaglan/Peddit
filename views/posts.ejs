@@ -58,6 +58,12 @@
         .dropdown-menu a:hover {
             background-color: #f0f0f0;
         }
+        .dropdown-menu p {
+            padding: 10px 16px;
+            text-decoration: none;
+            color: #333;
+            font-size: 20px;
+        }
 
         .hidden {
             display: none;
@@ -80,6 +86,7 @@
                 <span class="arrow">&#9662;</span>
             </button>
             <div id="dropdownMenu" class="dropdown-menu hidden">
+                <p>@<%= user.username %></p>
                 <a href="#">Profile</a>
                 <a href="#">Settings</a>
                 <a href="/users/logout">Logout</a>
@@ -119,22 +126,7 @@
 
     <script src="/js/darkMode.js"></script>
     <script src="/js/flashUpdate.js"></script>
-    <script>
-        const accountBtn = document.getElementById('accountBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-
-        if (accountBtn) {
-            accountBtn.addEventListener('click', () => {
-                dropdownMenu.classList.toggle('hidden');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!accountBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                    dropdownMenu.classList.add('hidden');
-                }
-            });
-        }
-    </script>
+    <script src="/js/dropDown.js"></script>
 </body>
 
 </html>

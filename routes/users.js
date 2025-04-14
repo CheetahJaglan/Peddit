@@ -38,5 +38,17 @@ router.post("/login",
             res.redirect("/posts");
         });
 
+router.get("/logout", (req, res) => {
+    req.logout((err) => {
+        if (err) {
+            console.error(err);
+            return res.redirect("/posts");
+        }
+        req.flash("success", "Logged Out");
+        res.clearCookie("username");
+        res.redirect("/posts");
+    });
+}
+);
 
 module.exports = router;
