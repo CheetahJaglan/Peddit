@@ -9,8 +9,9 @@ const UserSchema = new Schema({
     },
     profilePic: {
         type: String,
-        default: 'www.profilepic.com/default.png'
+        required: false,
     }
+    
 });
 
 // This adds username and hashed password fields automatically

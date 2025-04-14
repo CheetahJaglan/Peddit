@@ -1,8 +1,16 @@
 const express = require('express');
 const User = require('../models/user');
 const passport = require('passport');
-
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
+
+
+// router
+//     .route('/')
+//     .post(upload.single('ProfilePic'), (req, res) => {
+//         res.send(req.file);
+//     })
 
 // Example route: GET /signup
 router.get('/signup', (req, res) => {
@@ -10,11 +18,13 @@ router.get('/signup', (req, res) => {
 });
 
 // Example route: POST /users
-router.post('/signup', async (req, res) => {
+router.post('/signup', upload.single('ProfilePic') , async (req, res) => {
     try{
-
         let {username, password, bio} = req.body;
-        const newUser = new User({username, password, bio});
+        const profilePicPath = req.file ? `/uploads/${req.file.filename}` : null;
+        console.log('Profile Pic Path:', req.file);
+        console.log('Body:', req.body);
+        const newUser = new User({username, password, bio, profilePic: profilePicPath});
         await User.register(newUser, password);
         req.flash("success", "User Registered");
         res.redirect("/posts");
