@@ -20,12 +20,10 @@ router.get("/", async (req, res) => {
     if (req.query.json === "true") {
       return res.json({ posts, user });
     }
-    console.log(user)
     // Just pass the user directly to the view. No messing with the image URL.
     res.render("posts", { posts, user });
 
   } catch (err) {
-    console.log("Error fetching posts:", err);
     res.render("error_500", { err_msg: `Error fetching posts : ${err}` });
   }
 });
@@ -55,7 +53,6 @@ router.post("/", async (req, res) => {
     if (req.query.json === "true") return res.json({ success: true, post: newPost });
     res.redirect("/posts");
   } catch (err) {
-    console.log("Error creating post:", err);
     req.flash("error", "Failed to create post.");
     res.redirect("/posts");
   }
@@ -72,7 +69,6 @@ router.get("/:id", async (req, res) => {
     if (req.query.json === "true") return res.json({ post });
     res.render("show", { post });
   } catch (err) {
-    console.log("Error fetching post:", err);
     res.render("error_404", { err_msg: "The post you want to view doesn't exist" });
   }
 });
@@ -106,7 +102,6 @@ router.patch("/:id", async (req, res) => {
     req.flash("success", "Post updated!");
     res.redirect(`/posts/${req.params.id}`);
   } catch (err) {
-    console.log("Error updating post:", err);
     req.flash("error", "Failed to update post.");
     res.redirect("/posts");
   }
@@ -132,7 +127,6 @@ router.delete("/:id", async (req, res) => {
     req.flash("success", "Post deleted successfully!");
     res.redirect("/posts");
   } catch (err) {
-    console.log("Error deleting post:", err);
     req.flash("error", "Error deleting post.");
     res.redirect("/posts");
   }
@@ -148,7 +142,6 @@ router.post("/:id/comment", async (req, res) => {
     req.flash("success", "Comment added!");
     res.redirect(`/posts/${req.params.id}`);
   } catch (err) {
-    console.log("Error adding comment:", err);
     req.flash("error", "Failed to add comment.");
     res.redirect(`/posts/${req.params.id}`);
   }
@@ -179,7 +172,6 @@ router.delete("/:id/comment/:index", async (req, res) => {
     req.flash("success", "Comment deleted!");
     res.redirect(`/posts/${id}`);
   } catch (err) {
-    console.log("Error deleting comment:", err);
     req.flash("error", "Error deleting comment.");
     res.redirect(`/posts/${req.params.id}`);
   }

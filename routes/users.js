@@ -34,7 +34,7 @@ router.post("/signup", upload.single("ProfilePic"), async (req, res) => {
       bio,
       ProfilePic: cloudinaryUrl,
     });
-
+    // Check if the username already exists
     await User.register(newUser, password);
     req.flash("success", "User Registered");
     res.redirect("/posts");
@@ -44,14 +44,14 @@ router.post("/signup", upload.single("ProfilePic"), async (req, res) => {
   }
 });
 
-router.get("/users/Profile/:username", async (req, res) => {
+router.get("/Profile/:username", async (req, res) => {
   const { username } = req.params;
-  const TargetUser = User.findById(username);
+  const TargetUser = await User.findByUsername(username);
   console.log(TargetUser);
-  if (req.isAuthenticated) {
-    res.render("profile", { TargetUser });
+  if (req.isAuthenticated()) {
+    res.render("profile", { user : TargetUser });
   } else {
-    res.flash("error", "Please log in to edit this profile.");
+    req.flash("error", "Please log in to view this profile.");
     res.redirect("/users/login");
   }
 });
@@ -75,7 +75,6 @@ router.post(
 router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
-      console.error(err);
       return res.redirect("/posts");
     }
     req.flash("success", "Logged Out");
