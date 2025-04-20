@@ -26,13 +26,8 @@ mongoose
     console.log("Database connection error:", err);
   });
 
-// Rate limiting middleware
-const limiter = rateLimit({
-  windowMs: 10 * 60 * 1000,
-  max: 200,
-  message: "Too many requests, please try again later.",
-});
-app.use(limiter);
+
+
 
 // Payload size limits
 app.use(express.json({ limit: "10kb" }));
@@ -104,10 +99,6 @@ app.get("/random", async (req, res) => {
     }
     const randomIndex = Math.floor(Math.random() * count);
     const randomPost = await Post.findOne().skip(randomIndex);
-
-    if (req.query.json === "true") {
-      return res.json({ post: randomPost });
-    }
     res.redirect(`/posts/${randomPost._id}`);
   } catch (err) {
     console.log("Error fetching random post:", err);

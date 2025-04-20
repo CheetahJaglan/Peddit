@@ -41,9 +41,16 @@
                 <%= post.title %>
             </h2>
             <p><%- post.content %></p>
-            <p>Post by: <a href="/users/Profile/<%= post.username %>"><%= post.username %></a>
-            </p>
-            <%  %>
+
+            <% if (postuser.ProfilePic) { %>
+                <img src="<%= postuser.ProfilePic %>" alt="<%= postuser.username %>" id="profilePic" />
+              <% } else { %>
+                <img src="https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg" alt="User" id="profilePic" />
+              <% } %>
+            
+            <span style="margin-bottom: 100px;">Post by: <a href="/users/Profile/<%= post.username %>"><%= post.username %></a>
+            </span>
+            <% if(user && post.username == user.username){ %>
             <div class="post-actions">
                 <form action="/posts/<%= post.id %>/edit" method="get">
                     <button type="submit" class="btn btn-edit">Edit</button>
@@ -54,6 +61,7 @@
                 </form>
 
             </div>
+            <% } %>
         </div>
         <div class="post-info comment-section">
             <h3>Comments</h3>
@@ -76,7 +84,7 @@
                     <% post.comments.forEach((comment, index)=> { %>
                         <div class="comment-card">
                             <p><strong>
-                                    <%= comment.cUsername %>
+                                    @<%= comment.cUsername %>
                                 </strong></p>
                             <h4>
                                 <%= comment.cTitle %>

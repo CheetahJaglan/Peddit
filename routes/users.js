@@ -47,18 +47,13 @@ router.post("/signup", upload.single("ProfilePic"), async (req, res) => {
 router.get("/Profile/:username", async (req, res) => {
   const { username } = req.params;
   const TargetUser = await User.findByUsername(username);
-  if (req.isAuthenticated()) {
-    const user = req.user ? await User.findById(req.user._id) : null;
-    if (user.username === TargetUser.username) {
-      res.render("profile", { user : TargetUser, isSelf: true });
-    } else {
-    res.render("profile", { user : TargetUser, isSelf: false });
-  }
+  const user = req.user ? await User.findById(req.user._id) : null;
+  if (user && user.username === TargetUser.username) {
+    res.render("profile", { user : TargetUser, isSelf: true });
   } else {
-    req.flash("error", "Please log in to view this profile.");
-    res.redirect("/users/login");
-  }
-});
+  res.render("profile", { user : TargetUser, isSelf: false });
+  
+}});
 
 router.get("/login", (req, res) => {
   res.render("login");
@@ -76,6 +71,13 @@ router.post(
   }
 );
 
+router.get("/deleteAccount", async (req, res) => {
+  const user = req.user ? await User.findById(req.user._id) : null;
+  await User.findByIdAndDelete(req.user._id)
+  req.flash("success", "Account Deleted");
+  res.clearCookie("username");
+  res.redirect("/posts");
+});
 router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {

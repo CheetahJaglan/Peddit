@@ -7,51 +7,161 @@
   <title><%= user.username %>'s Profile</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-top: 2rem;
+      position: relative;
     }
+
     .profile-container {
-      max-width: 600px;
-      margin: 50px auto;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 20px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
+      width: 300px;
+      margin: 0 auto;
     }
+
     .profile-pic {
-      width: 150px;
-      height: 150px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 20px;
+      border: 3px solid #ccc;
+      margin-bottom: 1rem;
     }
+
     .username {
-      font-size: 24px;
+      font-size: 1.5rem;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 0.5rem;
     }
+
     .bio {
-      font-size: 16px;
+      font-size: 1rem;
       color: #555;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .delete-container {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .delete-trigger {
+      background-color: transparent;
+      color: #6c757d;
+      border: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1rem;
+    }
+
+    .modal-content p {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .confirm-delete {
+      background-color: #dc3545;
+    }
+
+    .confirm-delete:hover {
+      background-color: #a71d2a;
     }
   </style>
 </head>
 <body>
   <div class="profile-container">
-    <img src="<%= user.ProfilePic %>" alt="Profile Picture" class="profile-pic" />
+    <% if (user.ProfilePic) { %>
+      <img src="<%= user.ProfilePic %>" alt="<%= user.username %>" class="profile-pic" />
+    <% } else { %>
+      <img src="https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg" alt="User" class="profile-pic" />
+    <% } %>
     <div class="username">@<%= user.username %></div>
     <div class="bio"><%= user.bio %></div>
     <% if (isSelf) { %>
       <button>Edit Bio</button>
     <% } %>
   </div>
- 
+
   <% if (isSelf) { %>
-    <div style="height : 200vh; background-color: transparent ;"></div>
-    <button>delete account</button>
+    <div class="delete-container">
+      <button class="delete-trigger" onclick="document.getElementById('deleteModal').style.display='block'">Delete my account</button>
+    </div>
+
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <h3>Hold up! ⚠️</h3>
+        <p>
+          Deleting your account is permanent. You will lose all your data, posts, and connections.
+          This action cannot be undone.
+        </p>
+        <form action="/users/deleteAccount" method="get">
+          <button type="submit" class="confirm-delete">
+            Yes, I understand the consequences. Delete my account.
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      window.onclick = function(event) {
+        const modal = document.getElementById('deleteModal');
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    </script>
   <% } %>
 </body>
 </html>

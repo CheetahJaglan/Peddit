@@ -17,9 +17,6 @@ router.get("/", async (req, res) => {
     // Check if the user is logged in and fetch their profile
     const user = req.user ? await User.findById(req.user._id) : null;
 
-    if (req.query.json === "true") {
-      return res.json({ posts, user });
-    }
     // Just pass the user directly to the view. No messing with the image URL.
     res.render("posts", { posts, user });
 
@@ -50,7 +47,6 @@ router.post("/", async (req, res) => {
     const newPost = new Post(req.body.Post);
     await newPost.save();
     req.flash("success", "Post created successfully!");
-    if (req.query.json === "true") return res.json({ success: true, post: newPost });
     res.redirect("/posts");
   } catch (err) {
     req.flash("error", "Failed to create post.");
@@ -62,14 +58,16 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    const Postuser = await User.findByUsername(post.username);
+    const user = req.user ? await User.findById(req.user._id) : null;
     if (!post) {
       req.flash("error", "Post not found.");
       return res.redirect("/posts");
     }
-    if (req.query.json === "true") return res.json({ post });
-    res.render("show", { post });
+    res.render("show", { post , postuser : Postuser, user});
   } catch (err) {
     res.render("error_404", { err_msg: "The post you want to view doesn't exist" });
+    console.log(err);
   }
 });
 
