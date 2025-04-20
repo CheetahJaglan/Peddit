@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 Error</title>
     <link rel="stylesheet" href="/css/flash.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+        }
+
+        img {
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0.5em 0;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 0 20px;
+        }
+    </style>
 </head>
 <body>
     <% if (success && success.length > 0) { %>
@@ -12,16 +41,15 @@
           <span class="close-btn" onclick="this.parentElement.classList.add('fade-out'); setTimeout(() => this.parentElement.remove(), 500);">×</span>
           <%= success %>
         </div>
-      <% } %>
-      
-      <% if (error && error.length > 0) { %>
+    <% } %>
+
+    <% if (error && error.length > 0) { %>
         <div class="flash error fade-in">
           <span class="close-btn" onclick="this.parentElement.classList.add('fade-out'); setTimeout(() => this.parentElement.remove(), 500);">×</span>
           <%= error %>
         </div>
-      <% } %>
-      
-      
+    <% } %>
+
     <img src="img/error_for_404.svg" alt="404 Error">
     <h1>404 - Page Not Found</h1>
     <p><%= err_msg %></p>

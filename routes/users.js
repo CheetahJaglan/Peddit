@@ -47,9 +47,13 @@ router.post("/signup", upload.single("ProfilePic"), async (req, res) => {
 router.get("/Profile/:username", async (req, res) => {
   const { username } = req.params;
   const TargetUser = await User.findByUsername(username);
-  console.log(TargetUser);
   if (req.isAuthenticated()) {
-    res.render("profile", { user : TargetUser });
+    const user = req.user ? await User.findById(req.user._id) : null;
+    if (user.username === TargetUser.username) {
+      res.render("profile", { user : TargetUser, isSelf: true });
+    } else {
+    res.render("profile", { user : TargetUser, isSelf: false });
+  }
   } else {
     req.flash("error", "Please log in to view this profile.");
     res.redirect("/users/login");

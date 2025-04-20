@@ -44,6 +44,14 @@
     <img src="<%= user.ProfilePic %>" alt="Profile Picture" class="profile-pic" />
     <div class="username">@<%= user.username %></div>
     <div class="bio"><%= user.bio %></div>
+    <% if (isSelf) { %>
+      <button>Edit Bio</button>
+    <% } %>
   </div>
+ 
+  <% if (isSelf) { %>
+    <div style="height : 200vh; background-color: transparent ;"></div>
+    <button>delete account</button>
+  <% } %>
 </body>
 </html>

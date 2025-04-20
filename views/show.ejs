@@ -41,7 +41,7 @@
                 <%= post.title %>
             </h2>
             <p><%- post.content %></p>
-            <p>Post by: <%= post.username %>
+            <p>Post by: <a href="/users/Profile/<%= post.username %>"><%= post.username %></a>
             </p>
             <%  %>
             <div class="post-actions">
