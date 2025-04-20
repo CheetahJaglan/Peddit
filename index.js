@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(cookieParser());
 
 // Session middleware
-app.use(session({ secret: "80p_peddit", resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 
 // Flash middleware
 app.use(flash());
