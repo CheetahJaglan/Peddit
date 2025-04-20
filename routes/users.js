@@ -5,9 +5,16 @@ const multer = require("multer");
 const { storage } = require("../cloudConfig.js");
 const upload = multer({ storage });
 const router = express.Router();
-
+const Post = require("../models/post.js");
+const cloudinary = require("../cloudConfig.js").cloudinary;
 // router
 //
+  
+function getPublicIdFromUrl(url) {
+  const regex = /\/v\d+\/(.*?)\./;
+  const match = url.match(regex);
+  return match ? match[1] : null;
+}
 
 // Example route: GET /signup
 router.get("/signup", (req, res) => {
@@ -49,11 +56,11 @@ router.get("/Profile/:username", async (req, res) => {
   const TargetUser = await User.findByUsername(username);
   const user = req.user ? await User.findById(req.user._id) : null;
   if (user && user.username === TargetUser.username) {
-    res.render("profile", { user : TargetUser, isSelf: true });
+    res.render("profile", { user: TargetUser, isSelf: true });
   } else {
-  res.render("profile", { user : TargetUser, isSelf: false });
-  
-}});
+    res.render("profile", { user: TargetUser, isSelf: false });
+  }
+});
 
 router.get("/login", (req, res) => {
   res.render("login");
@@ -70,13 +77,35 @@ router.post(
     res.redirect("/posts");
   }
 );
-
 router.get("/deleteAccount", async (req, res) => {
+  if(req.isAuthenticated()){
   const user = req.user ? await User.findById(req.user._id) : null;
-  await User.findByIdAndDelete(req.user._id)
+  await Post.deleteMany({ username: user.username });
+  if(user.ProfilePic) {
+  const publicId = getPublicIdFromUrl(user.ProfilePic);
+
+  if (publicId) {
+    cloudinary.uploader.destroy(publicId, (error, result) => {
+      if (error) {
+        console.log("Error deleting image:", error);
+      } else {
+        console.log("Image deleted successfully:", result);
+      }
+    });
+  } else {
+    console.log("Invalid ProfilePic URL or public ID not found");
+  }
+}
+  // Delete user account
+  await User.findByIdAndDelete(req.user._id);
+
   req.flash("success", "Account Deleted");
   res.clearCookie("username");
-  res.redirect("/posts");
+  res.redirect("/posts");}
+  else {
+    req.flash("error", "You must be logged in to delete your account.");
+    res.redirect("/users/login");
+  }
 });
 router.get("/logout", (req, res) => {
   req.logout((err) => {
