@@ -8,7 +8,6 @@ const port = 3000;
 const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
-const rateLimit = require("express-rate-limit");
 const cookieParser = require("cookie-parser");
 const postRoutes = require("./routes/posts.js");
 const userRoutes = require("./routes/users.js");
